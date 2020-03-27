@@ -1,0 +1,88 @@
+<!DOCTYPE html> 
+	<head>
+		<title>Word Count</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+	  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+		  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+		   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+		     
+		    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+		<style>
+			p{font-size : 28px;}
+			text-box{width:auto;}
+			@media only screen and (max-width: 768px) {
+					  /* For mobile phones: */
+					  p {
+					    font-size : 24px;
+					  }
+					}
+		</style>		 
+	 </head>
+	
+	<body>
+		 <form action="../php/wordCount.php" method="POST">
+		 	<? if($MasterFlag == True)
+		 	{
+			 	include("../php/navigationMenu.php");
+		 	} ?>
+			<div class= "container">
+				<div class="row">
+					<div class="col-lg-12 col-sm-3 col-md-9 text-center">
+						<h1> Word Count</h1>
+					</div>
+				</div>
+				
+				<div class="row">
+				 	<div class="col-lg-12 col-sm-3 col-md-9">
+				 		 <p><? if($displayFlag == 2 ) { echo "Sentence :-"; } else  { echo "Enter Sentence :-"; } ?></p>
+					  </div>
+				 </div>
+					
+				 <div class="row">
+					 <div class="col-lg-12 col-sm-3 col-md-6">
+					 	   <div class= "<? if( $sentenceError == True) { echo "alert alert-danger text-center"; } ?>" style="font-size:23px;">
+							 <textarea style="font-size: 18px"  class= "form-control" type="text" name="sentence" value="" ><? echo $string; ?></textarea> 
+						   </div>
+					 </div>
+				 </div>
+				 
+				  <div class="mt-4 row">
+				 	<div class="col-lg-12 col-sm-3 col-md-6">
+						 <p><? if($displayFlag == 2 ) { echo "word :-"; } else  { echo "Enter word :-"; } ?></p>
+					 </div>
+				 </div>
+					
+				 <div class="row">
+					 <div class="col-lg-12 col-sm-3 col-md-6">
+						   <div class="<? if( $wordError == True) { echo "alert alert-danger text-center"; } ?>" style="font-size:23px;"> 
+						   	<textarea style="font-size: 18px" class="form-control  " type="text" name="search_word" value=""><? echo $string2; ?></textarea> 
+						   </div>   
+					 </div>
+				 </div>
+				  	
+				  <div class="row">
+					 <div class="mt-3 text-center">
+					 	 <input style="font-size:20px;"   type="submit" class="mt-5 shadow btn-danger btn" name="input" value = "Count Word"> 
+					 	<? if($displayFlag == 1 or $displayFlag == 2) {?>
+								 <input style="font-size:20px;"   type="submit" class="mt-5 shadow btn-danger btn" name="input" value = "CLEAR"> 
+						<? } ?> 	 
+					 </div>
+				 </div>
+				 
+				 <div class="mt-5 row">
+					<div class="mx-auto">
+						<? if($displayFlag == 2){?>
+							<p class="text-center"> No of Occurences of <br> word "<? echo $string2 ;?>" is </p>
+							<input style=" text-align:center;font-weight:bold;font-size: 25px; border-radius: 50px;  " class= "text-box shadow form-control" type="text" name="word" value="<? echo $Resultword; ?>" onkeydown="return false">    
+						<? } elseif($displayFlag == "1") { ?>
+					 		<p class=" text-center bg-danger">Match Not Found <br> Chech Entered Word<span style='font-size:150px;'>&#128533;</span></p> 
+				 		<? } ?>		
+					</div>
+				</div>	
+			  </div> 
+		 </form>	 
+	</body>
+	
+</html>
