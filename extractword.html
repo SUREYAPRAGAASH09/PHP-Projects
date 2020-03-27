@@ -1,0 +1,93 @@
+<!doctype html>
+	<head>
+		<title>Extract Word </title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		 
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+		<style>
+			p{font-size : 28px;}
+			text-box{width:auto;}
+			@media only screen and (max-width: 768px) {
+					  /* For mobile phones: */
+					  p {
+					    font-size : 24px;
+					  }
+					}
+				 
+		 </style>
+		 
+	</head>
+	
+	<body>
+		<form action="../php/extractWord.php" method="POST">
+			<? if($MasterFlag == True)
+		 	{
+		 	include("../php/navigationMenu.php");
+		 	} ?>
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12 col-sm-3 col-md-9 text-center">
+						<h1>Extract Word</h1>
+					</div>
+				</div>
+			 
+			
+				<div class="row">
+					 <div class="col-lg-12 col-sm-3 col-md-9">
+					 	 <p><? if($displayFlag == 2 ) { echo "Sentence :-"; } else  { echo "Enter Sentence :-"; } ?></p>
+					 </div>
+				 </div>
+				 
+				   <div class="row">
+					<div class="col-lg-12 col-sm-3 col-md-6">
+						   <div class= "<? if( $sentenceError == True) { echo "alert alert-danger text-center"; } ?>" style="font-size:23px;">
+							 <textarea style="font-size: 18px"  class= "form-control" type="text" name="txtbx1" value="" ><? echo $string; ?></textarea> 
+						   </div>
+					 </div>
+				 </div>
+				 
+				 <div class="mt-4 row">
+					<div class="col-lg-12 col-sm-3 col-md-6">
+						 <p><? if($displayFlag == 2 ) { echo "Posistion :-"; } else  { echo "Enter Position :-"; } ?></p>
+					 </div>
+				 </div>
+						
+				 <div class="row">
+					 <div class="col-lg-12 col-sm-3 col-md-6">
+						   <div class="<? if( $PositionError == True) { echo "alert alert-danger text-center"; } ?>" style="font-size:23px;"> 
+						   	<input style="font-size: 18px" class="form-control  " type="text" name="txtbx2" value="<? echo $number; ?>"><? if($notANumberFlag == True) { echo "Allowed Only Numeric Values"; }?> 
+						   </div>   
+					 </div>
+				</div>
+				
+				  <div class="row">
+					 <div class="text-center">
+					 	 <input style="font-size:20px;"   type="submit" class="mt-5 shadow btn-danger btn" name="input" value = "Display word"> 
+					 	<? if($displayFlag == 1 or $displayFlag == 2) {?>
+								 <input style="font-size:20px;"   type="submit" class="mt-5 shadow btn-danger btn" name="input" value = "CLEAR"> 
+						<? } ?> 	 
+					 </div>
+				 </div>
+				 
+				 <div class = "mt-4  row">
+					<div class="mx-auto"> 
+						<? if($displayFlag == 2){?> 
+							
+							<div class="p-2" style= "width:550px;color:black">
+							    	<h1> Word </h1>
+							    </div>
+							 
+							<input style="margin-top:30px;text-align:center;font-weight:bold;font-size: 25px; border-radius: 50px;color:red; " class= "shadow txtbx form-control" type="text" name="word" value="<? echo $word; ?>" onkeydown="return false">   
+						<? } elseif($displayFlag == "1") { ?>
+							<h4 class=" text-center bg-danger" style="width : 340px; ">Chech Entered Values <span style='font-size:150px;'>&#128533;</span></h4>  
+						<? } ?>
+					</div>
+				</div>	 
+			</div>
+		</form>
+	</body>
+</html>
