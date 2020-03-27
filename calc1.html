@@ -1,0 +1,145 @@
+
+<html>
+	<head>
+		<title>Calculator</title>
+		<meta charset="utf-8"> 
+		<meta name = "viewport" content = "width=device-width, inital-scale = 1.0"> 
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+ 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+ 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+ 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+ 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+ 		  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+ 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+ 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+ 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+ 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+ 		<link rel="stylesheet" href="../php/calcStyleSheet.css">
+ 		<style>
+ 			.txtbx
+				{
+					text-align:right;
+					font-weight:bold;
+					width : 330px; 
+					height : 35px;
+					margin : auto;
+					text:black;
+					 
+				}
+				 .text-white
+				 {
+				 	width : 330px;
+				 	margin : auto;
+				 	background-color : rgb(255,255,255);
+				 	 
+				 }
+				  .mystyle
+				{  
+					 font-size : 25px; 	 
+					  width : 60px;
+					  border-style: none;
+				}
+				.container
+				{
+					height : 100px !important;
+				}
+				.row-margin-bottom
+				{
+					margin-bottom:20px;
+				} 
+				.col-margin-left
+				{
+					margin-left:25px;
+				}	
+				 
+ 		</style>
+	</head> 
+	<body background="../html/index.jpg" style=" background-repeat: no-repeat;background-size:3000px 1000px;">
+		 <? if($masterFlag)
+		 {  include("../php/navigationMenu.php");  }
+		  ?>
+		<div class="container mt-5 pt-5">
+			<div class="   text-white text-body">  
+				 <h1 class="p-2 bg-primary text-center">CALCULATOR</h1>  
+			  	 
+		<form action="../php/calc1.php" method="POST"> 
+			   	  <div class= "row">
+			   	  	<div class="  justify-content-center col-sm-6 col-md-12 col-lg-12 btn-group">  
+  						<label><input style="font-size: 15px;width : 330px;	height : 35px;" class= "txtbx form-control border-0" type="text" name="txtbx1" id="firstValue" value="<?php echo $txtbx1;    ?>" onkeydown="return false" ></label>
+				   	</div>	         
+				 </div>
+				 <div class= "row" style="margin-bottom:px;">
+				 	<div class="  justify-content-center col-sm-6 col-md-12 col-lg-12 btn-group">   
+				   	 	<label><input style="font-size: 18px;width : 330px;" class= "txtbx form-control border-0" type="text" name="txtbx2" id="firstValue" value="<?php echo $txtbx2;?>" onkeydown="return false" ></label>
+				   	 </div>	  			                                                                      
+				 </div>
+			  </div>
+			  <div class="p-5  text-white text-body"> 
+			  	 
+				<div class = "row row-margin-bottom"  >	 
+					<div class="  justify-content-center  mx-auto "> 
+						<input type="submit" class="shadow mystyle btn-light btn " name="input" value = "7" style="font-size : 25px; ">
+						<input type="submit" class=" shadow mystyle btn-light btn" name="input" value = "8" style="font-size : 25px; ">
+						<input type="submit" class="shadow   mystyle btn-light btn" name="input" value = "9" style="font-size : 25px; ">
+						<input type="submit" class="shadow   mystyle btn-light btn" name="symbols" value = "/"  style="font-size : 25px; "> 
+					</div>	 
+				</div>
+				 
+				<div class = "row row-margin-bottom"  >	
+					<div class=" justify-content-center mx-auto  ">
+						<input type="submit" class="shadow mystyle btn-light btn " name="input" value = "4" style="font-size : 25px; ">
+						<input type="submit" class="shadow mystyle btn-light btn " name="input" value = "5" style="font-size : 25px; "> 
+						<input type="submit" class="shadow mystyle btn-light btn " name="input" value = "6" style="font-size : 25px; "> 
+						<input type="submit" class="shadow mystyle btn-light btn " name="symbols" value = "*"  style="font-size : 25px; ">   
+					</div>	  
+				</div>
+				 
+				<div class = "row row-margin-bottom"  >	
+					<div class=" justify-content-center mx-auto ">
+						<input type="submit" class="shadow mystyle btn-light btn " name="input" value = "1" style="font-size : 25px; "> 
+						<input type="submit" class="shadow mystyle btn-light btn " name="input" value = "2" style="font-size : 25px; "> 
+						<input type="submit" class="shadow mystyle btn-light btn " name="input" value = "3" style="font-size : 25px; "> 
+						<input type="submit" class="shadow mystyle btn-light  btn" name="symbols" value = "-" style="font-size : 25px; ">  
+					 </div>	    
+				</div>
+				  
+				<div class = "row btn-group row-margin-bottom">	
+					 <div class = "col-margin-left"> 					 	
+						<input type="submit" class=" shadow btn-light btn " name="input" value = "0" style="width:125px;font-size:25px;">						 
+						 <input type="submit" class="shadow mystyle btn-info btn " name="input" value = "+/-" style="font-size : 25px; " >						 
+					</div> 
+				</div>
+				 
+				<div class = "row btn-group row-margin-bottom">	
+					 <div class = "col-margin-left" > 
+						<input type="submit" class="shadow mystyle btn-danger btn " name="operation" value = "DEL" style="margin-top:-6px;font-size:25px" > 
+						<input type="submit" class="shadow mystyle btn-success btn " name="symbols" value = "=" style="width:125px;margin-top:-6px;font-size:25px " >
+						<input type="submit" class="shadow  btn-light btn " name="symbols" value= "+"  style="width:60px;font-size:25px;margin-top:-68px;height:110px;font-size:25px">  
+					</div> 
+				</div> 
+				
+				<div class = "row btn-group row-margin-bottom">	
+					 <div class = "col-margin-left" >  
+						<input type="submit" class="shadow mystyle  btn-light btn " name="operation" value = "CE" style="width:125px;margin-top:-6px; font-size:25px" >
+						<input type="submit" class="shadow mystyle btn-warning btn " name="operation" value = "C" style="margin-top:-6px;font-size:25px" > 
+						<input type="submit" class="shadow mystyle btn-light btn " name="inputdot" value = "." style="margin-top:-6px;font-size:25px" >  
+					</div> 
+				</div>
+			  </div>
+			 <input type="hidden" id="operator_count" name="operator_count" value="<?php  echo  $operator_count; ?>" placeholder="operator_count">
+			<input type="hidden" id="operator" name="operator" value="<?php echo $operator; ?>" placeholder="operator"> 
+			<input type="hidden" id="first_value" name="first_value" value="<?php echo  $first_value; ?>" placeholder="first_value"> 
+			<input type="hidden" id="second_value" name="second_value" value="<?php echo  $second_value; ?>" placeholder="second_value"> 
+			<input type="hidden" id="number_count" name="number_count" value="<?php echo  $number_count; ?>" placeholder="number_count" > 
+			<input type="hidden" id="display_count" name="display_count" value="<?php echo  $display_count; ?>" placeholder="display_count"> 	
+			<input type="hidden" id="first_number" name="first_number" value="<?php echo  $first_number; ?>" placeholder="first_number"> 
+			<input type="hidden" id="equalToFlag" name="equalToFlag" value="<?php echo  $equalToFlag; ?>" placeholder="equalToFlag"> 
+			 <input type="hidden" id="firstNumberFlag" name="firstNumberFlag" value="<?php echo  $firstNumberFlag; ?>" placeholder="firstNumberFlag"> 
+			  <input type="hidden" id="decimalFlag" name="decimalFlag" value="<?php echo  $decimalFlag; ?>" placeholder="decimalFlag"> 
+			 
+			</form>  
+		</div>
+	 </body>
+</html>
