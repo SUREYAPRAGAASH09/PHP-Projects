@@ -1,0 +1,150 @@
+<!doctype html>
+<? if($editFlag == True){
+	if($storeType == "xml")
+	{
+		//echo "inside xml";
+		$xml=simplexml_load_file("../xml/note.xml") or die("Error: Cannot create object");
+	 	foreach($xml->children() as $student)  //studentDetails
+		{ 
+			if($student['id'] == $xml_id)
+			{
+				 
+				$retainRollNoCLG = $student->CollegeRecords->RollNo;
+				$retainDepartment = $student->CollegeRecords->Department;
+				
+			}
+		}
+	}
+	else
+	{
+		//echo $primaryKeyValue;
+		//echo "inside editFlaf";
+		include("../php/sqlConnectionFile.php");
+		
+		$sql = "select * from collegeRecords where personalDetails_collegeRecords_FK = '$primaryKeyValue' ;";
+		$stmt = sqlsrv_query( $conn, $sql );
+		if( $stmt == false) {
+		    die( print_r( sqlsrv_errors(), true) );
+		}
+		else
+		{
+			//echo "html sql  founded";
+		}
+		
+		while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) 
+		{
+			$retainRollNoCLG = $row['RollNoCLG'];
+			$retainDepartment = $row['Department'];
+		} 
+	}	
+}?>
+<html>
+	<head>
+		<title>College Record Details</title>
+		 <meta charset="utf-8">
+		  <meta name="viewport" content="width=device-width, initial-scale=1">
+		  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+		  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+		  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+		  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+		  <style>
+		  	body {
+			  font-family: Arial;
+			  color : #000000;
+			  background-color: #ddffdd!important;
+			  font-size:17px;
+			}
+			.img-thumbnail-clg
+			{
+				  position: absolute;
+				    top:105px;
+				    left:47%;
+				    border-radius:50px; 
+				    border:none;
+				
+			}
+			.inner-image
+			{
+				height:68px;
+				width:68px;
+				border-radius:50px; 
+			}
+			button {
+				  background-color: #4CAF50;
+				  color: white;
+				  padding: 4px 12px;
+				  margin: auto;
+				  border: none;
+				  cursor: pointer;
+				  width: 100%;
+			}
+		</style>
+	</head>
+	<body>
+		 <? 
+		  $CON = 1;
+		  include("../php/navigationMenu.php");  
+		 ?>
+		<form action="../php/collegeDetails.php" method="POST">
+		<label id="d"></label><br>
+		
+		<div class="container w3-indigo" style="width:50%;margin-top:50px;padding:24px;border-radius:20px;">
+			<div class="row">
+		 	 	<div class="justify-content-center mx-auto">
+		 	 		<img class="shadow-lg  img-thumbnail-clg  inner-image"  src="../php/collegeIcon.png" alt="personalDetailsIcon" >
+		 	 	</div>
+		 	 </div>
+			<div class="row">
+				<div class="mx-auto">
+					<h3><bold>College Details<bold></h3>
+				</div>
+			</div>
+			 
+			 
+			<script>
+			$(document).ready(function(){
+			    $('[data-toggle="popover"]').popover();   
+			});
+			</script>
+			<div class="mt-4 row">
+				<div class="col-md-6">
+					<label id="subject_1">Roll Number</label>
+					<? if($RollNoCLGErrFlag == "True") { ?>
+					<a href="#" data-toggle="popover" title="Warning" data-content="<? if($RollNoCLGEmptyFlag == "True"){ echo "Enter Roll Number "; }elseif($RollNoCLGCharInvalid == "True"){ echo "Enter Roll No as Numeric values only"; }elseif($RollNoCLGLessThanZeroError == "True"){ echo "Enter roll Number"; }elseif($RollNoCLGGreaterThanZeroError == "True"){ echo "Enter Roll No"; } ?>" >
+					<img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+					<input type="text" class="form-control" placeholder="Roll Number" name="RollNoCLG" style="border: <? if($RollNoCLGErrFlag == "True") { echo "solid 3px red"; } ?>" value="<?php  echo $retainRollNoCLG; ?>">
+				</div>
+				<div class="col-md-6">
+					 <label class="">choose Department : </label> 
+					     	<? if($majorErrFlag == "True") { ?>
+						<a href="#" data-toggle="popover" title="Warning" data-content="<? if($majorEmptyFlag == "True"){ echo "Select Department"; } ?>" style="color:red;">
+						<img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+						<select name="Department" class="form-control"  id="Department"  style="border: <? if($majorErrFlag == "True") { echo "solid 3px red"; } ?>;width:100%; ">
+						         <option value="" disabled selected>Select Department</option>
+						         <option value="CSE" id="0" >CSE</option>
+						         <option value="ECE" id="1" >ECE</option>
+						         <option value="MECH" id="2" >MECH</option>
+						         <option value="EEE" id="2" >EEE</option>
+				   	  	 </select>
+					   	    <script type="text/javascript">
+						    document.getElementById('Department').value = "<?php echo $retainDepartment;?>";
+						   </script>
+				</div>
+			</div>
+			
+			 <div class="row">
+			  	<div class="justify-content-center mx-auto ">
+		  		    	   <button type="submit" class="mt-4 mx-auto" name="input" style="border-radius:20px;font-size:24px;" value="Submits" >Save</button>
+				</div>
+			  </div>
+			 
+		</div>
+		  <input type="hidden" name="primaryKeyValue" id="primaryKeyValue" placeholder="primaryKeyValue" value="<? echo $primaryKeyValue; ?>"> 
+		<input type="hidden" name="EditprimaryKey" id="EditprimaryKey" placeholder="EditprimaryKey" value="<? echo $EditprimaryKey; ?>"> 
+		<input type="hidden" name="xml_id" id="xml_id" placeholder="xml_id" value="<? echo $xml_id; ?>"> 
+		  <input type="hidden" id="storeType" name="storeType" value="<?php echo  $storeType; ?>" placeholder="storeType"> 
+		
+		</form>
+	</body>
+</html>
