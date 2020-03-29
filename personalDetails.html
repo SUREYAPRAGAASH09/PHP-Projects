@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<?
+
+if($editFlag == True){
+
+	if($storeType == "xml")
+	{
+		//echo "inside xml";
+		$xml=simplexml_load_file("../xml/note.xml") or die("Error: Cannot create object");
+	 	foreach($xml->children() as $student)  //studentDetails
+		{ 
+			if($student['id'] == $xml_id)
+			{
+				 
+				$retainFirstName = $student->personalDetails->FirstName;
+				$retainSecondName = $student->personalDetails->MiddleName;
+			 	$retainLastName = $student->personalDetails->LastName;
+			 	//echo "<br>";
+			 	 $retainDate = $student->personalDetails->DateOfBirth->Date;
+			 	 $retainMonth = $student->personalDetails->DateOfBirth->Month;
+ 				$retainYear = $student->personalDetails->DateOfBirth->Year;
+				$gender = $student->personalDetails->Gender;
+				 
+				  $language = $student->personalDetails->languageKnown;
+				 $languages_choosen = explode(",",$language);
+				  foreach( $languages_choosen as $lang)
+				  {
+					 if($lang == "German")
+					 {
+					 	 
+					 	$German_lang_choosed = "checked";
+					 }
+					 elseif($lang == "English")
+					 {
+					 	 
+					 	$English_lang_choosed = "checked";
+					 }
+					 else
+					 {
+					 	$French_lang_choosed = "checked";
+					  }
+				   }
+			}
+		}
+	}
+	
+	else
+	{
+		echo $xml_id;
+		echo $storeType;
+		//echo $depart;
+		//echo "value showing";
+		  $primaryKeyValue = $primaryKey;
+		//echo $EditprimaryKey;
+		include("../php/sqlConnectionFile.php");
+		
+		$sql = "select FirstName,MiddleName,lastName,CONVERT(varchar(24),DOB) as DOB,Gender,language_known from personalDetails where personalDetails_ID = '$primaryKeyValue' ;";
+		$stmt = sqlsrv_query( $conn, $sql );
+		if( $stmt == false) {
+		    die( print_r( sqlsrv_errors(), true) );
+		}
+		else
+		{
+			//echo "html sql  founded";
+		}
+		
+		while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) 
+		{		
+			 $retainFirstName = $row['FirstName'];
+			 $retainSecondName = $row['MiddleName'];
+			 $retainLastName = $row['lastName'];
+			  
+			 $arr = explode("-",$row['DOB']);
+  			 $retainMonth = (int)$arr[1];
+			  //echo "<br>";
+			  $retainDate = (int)$arr[2];
+		 	  $retainYear = $arr[0];
+			  $gender = $row['Gender'];
+			 
+			  $language = $row['language_known'];
+			  $languages_choosen = explode(",",$language);
+			  foreach( $languages_choosen as $lang)
+			  {
+				 if($lang == "German")
+				 {
+				 	 
+				 	$German_lang_choosed = "checked";
+				 }
+				 elseif($lang == "English")
+				 {
+				 	 
+				 	$English_lang_choosed = "checked";
+				 }
+				 else
+				 {
+				 	$French_lang_choosed = "checked";
+				  }
+			   }
+				 
+		} 
+	}
+	 
+		$editFlag == "True";
+}?>
+<html>
+	<head>
+	 <title>Personal Details</title>
+	 <meta charset="utf-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	      
+	  
+		<style>
+			body {
+				  font-family: Arial;
+				  color : white;
+				  background-color: #ddffdd!important;
+				  font-size:17px;
+			}
+			/*----------------------------style for Radio buttons-------------------------------*/
+					/* The container */
+					.conta {
+					  display: block;
+					  position: relative;
+					  padding-left: 35px;
+					  margin-bottom: 12px;
+					  cursor: pointer;
+					  font-size: 17px;
+					  -webkit-user-select: none;
+					  -moz-user-select: none;
+					  -ms-user-select: none;
+					  user-select: none;
+					}
+					
+					/* Hide the browser's default radio button */
+					.conta input {
+					  position: absolute;
+					  opacity: 0;
+					  cursor: pointer;
+					}
+					
+					/* Create a custom radio button */
+					.checkmark {
+					  position: absolute;
+					  top: 0;
+					  left: 0;
+					  height: 25px;
+					  width: 25px;
+					  background-color: #eee;
+					  border-radius: 50%;
+					}
+					
+					/* On mouse-over, add a grey background color */
+					.conta:hover input ~ .checkmark {
+					  background-color: #ccc;
+					}
+					
+					/* When the radio button is checked, add a blue background */
+					.conta input:checked ~ .checkmark {
+					  background-color: #2196F3;
+					}
+					
+					/* Create the indicator (the dot/circle - hidden when not checked) */
+					.checkmark:after {
+					  content: "";
+					  position: absolute;
+					  display: none;
+					}
+					
+					/* Show the indicator (dot/circle) when checked */
+					.conta input:checked ~ .checkmark:after {
+					  display: block;
+					}
+					
+					/* Style the indicator (dot/circle) */
+					.conta .checkmark:after {
+					 	top: 9px;
+						left: 9px;
+						width: 8px;
+						height: 8px;
+						border-radius: 50%;
+						background: white;
+					}
+			/*---------------------------style for Radio buttons gets overed--------------------------------------------*/
+			/*---------------------------style for checkboxes -------------------------------------------------------------*/
+					.contai {
+						  display: block;
+						  position: relative;
+						  padding-left: 35px;
+						  margin-bottom: 12px;
+						  cursor: pointer;
+						  font-size: 17px;
+						  -webkit-user-select: none;
+						  -moz-user-select: none;
+						  -ms-user-select: none;
+						  user-select: none;
+						}
+						
+						/* Hide the browser's default checkbox */
+						.contai input {
+						  position: absolute;
+						  opacity: 0;
+						  cursor: pointer;
+						  height: 0;
+						  width: 0;
+						}
+						
+						/* Create a custom checkbox */
+						.checkmarkss {
+						  position: absolute;
+						  top: 0;
+						  left: 0;
+						  height: 25px;
+						  width: 25px;
+						  background-color: #eee;
+						}
+						
+						/* On mouse-over, add a grey background color */
+						.contai:hover input ~ .checkmarkss {
+						  background-color: #ccc;
+						}
+						
+						/* When the checkbox is checked, add a blue background */
+						.contai input:checked ~ .checkmarkss {
+						  background-color: #2196F3;
+						}
+						
+						/* Create the checkmark/indicator (hidden when not checked) */
+						.checkmarkss:after {
+						  content: "";
+						  position: absolute;
+						  display: none;
+						}
+						
+						/* Show the checkmark when checked */
+						.contai input:checked ~ .checkmarkss:after {
+						  display: block;
+						}
+						
+						/* Style the checkmark/indicator */
+						.contai .checkmarkss:after {
+						  left: 9px;
+						  top: 5px;
+						  width: 5px;
+						  height: 10px;
+						  border: solid white;
+						  border-width: 0 3px 3px 0;
+						  -webkit-transform: rotate(45deg);
+						  -ms-transform: rotate(45deg);
+						  transform: rotate(45deg);
+						}
+			/*------------------------------style for checkboxes get overed-----------------------------------------------*/
+			/*--------------------------------style for image-----------------------------------------------------------------*/
+					 .imgcontainer {
+						  text-align: center;
+						   
+						}
+						
+						img.avatar {
+						  width: 20%;
+						  border-radius: %;
+						    height:480px;
+				  		width:400px;
+						}
+			/*----------------------------------style for image gets overed-------------------------------------------------------*/ 
+			/*-----------------------------------style for image tag----------------------------------------------------------------*/	 
+					 
+					 
+				
+				
+				button {
+				  background-color: #4CAF50;
+				  color: white;
+				  padding: 4px 12px;
+				  margin: auto;
+				  border: none;
+				  cursor: pointer;
+				  width: 100%;
+			}
+				
+	/*----------------------------------style for image tag gets overed-------------------------------------------------------*/ 			
+					 .popover {
+				    width:150px;
+				}
+				
+				.div2 {
+				  width: 150px;
+				  height: 140px;  
+				  border: 3px solid red;
+				}
+				 
+				img
+				{
+					height:68px;
+					width:68px;
+					border-radius:50px; 
+				}	
+				 .img-thumbnail {
+				    position: absolute;
+				    top: 72px;
+				    left:47%;
+				    border-radius:50px; 
+				    border:none;
+				}	
+		  	 			 
+		</style>
+		<script>
+		$(document).ready(function(){
+		    $('[data-toggle="popover"]').popover();   
+		});
+		</script>
+	</head>
+	<body class="  text-body">
+		 <? 
+		  $CON = 1;
+		  include("../php/navigationMenu.php");  
+		 ?>
+		<form action="../php/personalDetails.php" method="POST">
+		 
+				<div class="container w3-indigo" style="border-radius:20px;width:45%;margin-top:58px;height:500px" >
+					 <h3 class="pt-2"><center>Personal Details</center></h3>
+					 <div class="A  " >
+			   		 <img class="img-thumbnail" style="padding-bottom:px;" src="../php/personalIcon.png" alt="personalDetailsIcon" >	  
+					 </div> 
+					<h3 class="pt-1" ><center>Your Name</center></h3>
+				    	<div class="row">
+					    	<div class="col-sm-6 col-md-4">
+					    		<label>First name  </label>
+					    		<? if($FirstNameErrFlag == "True") { ?> 
+					    		<a href="#" data-toggle="popover" title="Warning" data-content="<?php if($FirstNameEmptyFlag == True) { echo "Enter your First name"; } elseif($FirstNameCharInvalid == True){ echo "Enter name using alphabetic letter alone ie A-Z/a-z"; } ?>" style="color:red;">
+					    		<img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+					    		  
+					    		<input type="text" class="form-control" placeholder="First Name" name="FirstName" value="<?php echo $retainFirstName;?>" style="border: <? if($FirstNameErrFlag == "True") { echo "solid 3px red"; } ?> "> 
+					    	</div>
+					    	<script>
+						$(document).ready(function(){
+						    $('[data-toggle="popover"]').popover();   
+						});
+						</script>
+					    	<div class="col-sm-6 col-md-4">
+					    		<label>Middle Name  </label>
+					    		<? if($SecondNameErrFlag == "True") { ?> 
+					    		<a href="#" data-toggle="popover" title="Warning" data-content="<?php if($SecondNameEmptyFlag == True) { echo "Enter your Middle name"; } elseif($SecondNameCharInvalid == True){ echo "Enter name using alphabetic letter alone ie A-Z/a-z with single character"; } ?>" style="color:red;">
+					    		<img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+					    		 <span  class="glyphicon"><? if($flag == True) { echo "&#xe013;";}?></span>
+					    		<input type="text" class="form-control" maxlength="1"  placeholder="Middle Name" name="SecondName" value="<?php echo $retainSecondName;?>" style="border: <? if($SecondNameErrFlag == "True") { echo "solid 3px red"; } ?> ">
+					    	</div>
+					    	<div class="col-sm-6 col-md-4">
+					    		<label>Last Name  </label>
+					    		<? if($LastNameErrFlag == "True") { ?> 
+					    		<a href="#" data-toggle="popover" title="Warning" data-content="<?php if($LastNameEmptyFlag == True) { echo "Enter your Last name"; } elseif($LastNameCharInvalid == True){ echo "Enter name using alphabetic letter alone ie A-Z/a-z"; } ?>" style="color:red;">
+					    		<img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+					    		 <span  class="glyphicon"><? if($flag == True) { echo "&#xe013;";}?></span>
+					    		<input type="text" class="form-control" placeholder="Last Name" name="LastName" value="<?php echo $retainLastName;?>" style="border: <? if($LastNameErrFlag == "True") { echo "solid 3px red"; } ?> ">
+					    	</div>
+					    </div>
+					    
+					<h3 class="text-center">Your Date of Birth</h3>
+			 		 <div class="mt-0 row" >
+					    	
+						    <div class="col-sm-6 col-md-4">
+						    	<label>Year  </label>
+					    		<? if($yearErrFlag == "True") { ?> 
+					    		<a href="#" data-toggle="popover" title="Warning" data-content="<?php if($yearEmptyFlag == True) { echo "Enter Year of your Date of birth"; } elseif($yearInvalid == "True"){ echo "it is a invalid date choose a valid date"; } ?>" style="color:red;">
+					    		<img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+					    		 <span  class="glyphicon"><? if($flag == True) { echo "&#xe013;";}?></span>
+					    		<select name="Year"  class="form-control" id="year" style="border: <? if($yearErrFlag == "True") { echo "solid 3px red"; } ?>">
+					    			 <option value="" selected >Year</option>
+								<?php
+								    for ($i=1990; $i<=2020; $i++)
+								    {
+								        ?>
+								            <option value="<?php echo $i;?>"><?php echo $i;?></option>
+								        <?php
+								    }
+								?>
+							</select>
+						    </div>
+						     <script type="text/javascript">
+						    document.getElementById('year').value = "<?php echo $retainYear;?>";
+						   </script>
+						  
+					    	<div class="col-sm-6 col-md-4">
+					    		<label>Month  </label>
+					    		<? if($monthErrFlag == "True") { ?> 
+					    		<a href="#" data-toggle="popover" title="Warning" data-content="<?php if($monthEmptyFlag == True) { echo "Enter Month of your Date of birth"; } elseif($monthInvalid == "True"){ echo "it is a invalid date choose a valid date"; }  ?>" style="color:red;">
+					    		<img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+					    		 <span  class="glyphicon"><? if($flag == True) { echo "&#xe013;";}?></span>
+					    		<select name="Month"  class="form-control" id="month" style="border: <? if($monthErrFlag == "True") { echo "solid 3px red"; } ?>">
+					    			 <option value="" selected >Month</option>
+								<?php
+								    for ($i=1; $i<=12; $i++)
+								    {
+								        ?>
+								            <option value="<?php echo $i;?>"><?php echo $i;?></option>
+								        <?php
+								    }
+								?>
+							</select>
+					    	</div>
+					    	 <script type="text/javascript">
+						    document.getElementById('month').value = "<?php echo $retainMonth; ?>";
+						   </script>
+						    <div class="col-sm-6 col-md-4">
+					    		<label>Date  </label>
+					    		<? if($dateErrFlag == "True") { ?> 
+					    		<a href="#" data-toggle="popover" title="Warning" data-content="<?php if($dateEmptyFlag == True) { echo "Enter Date of your Date of birth"; }  elseif($dateInvalid == "True"){ echo "it is a invalid date choose a valid date"; } ?>" style="color:red;">
+					    		<img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+					    		 <span  class="glyphicon"><? if($flag == True) { echo "&#xe013;";}?></span>
+					    		<select name="Date" class="form-control" id="date" placeholder="Date" style="border: <? if($dateErrFlag == "True") { echo "solid 3px red"; } ?>" >
+					    			 <option value="" selected >Date</option>
+								<?php
+								    for ($i=1; $i<=31; $i++)
+								    {
+								        ?>
+								            <option   value="<?php echo $i;?>"><?php echo $i;?></option>
+								        <?php
+								    }
+								?>
+							</select>
+					    	</div>
+					    	  <script type="text/javascript">
+						    document.getElementById('date').value = "<?php echo $retainDate; ?>";
+						   </script>
+					</div> 
+				 	
+			    	 	 <div class="mt-5 row mx-auto"   >
+			    	 	 	
+			    	 	 	 <div class="col-sm-6 col-md-4 mx-auto"  >
+			    	 	 	 	<div class="<? if($genderEmptyFlag == "True"){echo "div2";}?>">
+				    	 	 	 	
+						    			<label class="">Gender  </label>
+						    			
+						    			<? if($genderErrFlag == "True") { ?> 
+						    			<a href="#" data-toggle="popover" title="Warning" data-content="<?php if($genderEmptyFlag == True) { echo "select your gender"; }  ?>" style="color:red;">
+						    			<img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+					    	 	 	 	   <span  class="glyphicon"><? if($flag == True) { echo "&#xe013;";}?></span>
+					    	 	 	 	  <label class="conta">Male
+									  	<input type="radio" name="gender" <?php if (isset($gender) && $gender=="male") echo "checked";?> value="male">
+									  	<span class="checkmark"></span>
+									  </label>
+									  <label class="conta">Female
+										  <input type="radio" name="gender" value="female" <?php if (isset($gender) && $gender=="female") echo "checked";?>>
+										  <span class="checkmark"></span>
+									  </label>
+									  <label class="conta">others
+									 	 <input type="radio" name="gender" value="other" <?php if (isset($gender) && $gender=="other") echo "checked";?>>
+									  	<span class="checkmark"></span>
+									  </label>
+							</div>
+						</div>
+						 <div class="col-sm-6 col-md-6 mx-auto"  > 
+					    		<div class="<? if($languageErrFlag == "True"){echo "div2";}?>">
+						    		<label for="language">Language </label>
+						    		
+						    		<? if($languageErrFlag == "True") { ?> 
+					    			<a href="#" data-toggle="popover" title="Warning" data-content="<?php if($languageEmptyFlag == True) { echo "select any on of languges known to you"; }  ?>" style="color:red;">
+					    			<img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+						  	 	 <span  class="glyphicon"><? if($flag == True) { echo "&#xe013;";}?></span><br>
+						  	 	<div class="col-sm-6 col-md-4">
+						  	 		<label class="contai">English
+									  <input type="checkbox" name="languageEnglish" value="English" <?php echo $English_lang_choosed;  if(isset($_POST['languageEnglish'])) echo "checked='checked'"; ?> style="border: <? if($NationalityErrFlag == "True") { echo "solid 3px red"; } ?>">
+									  <span class="checkmarkss"></span>
+									</label>
+									<label class="contai">German
+									  <input type="checkbox" name="languageGerman" value="German" <?php echo $German_lang_choosed; echo $lang_choosed; if(isset($_POST['languageGerman'])) echo "checked='checked'"; ?>>
+									  <span class="checkmarkss"></span>
+									</label>
+									<label class="contai">French
+									  <input type="checkbox" name="languageFrench" value="French" <?php echo $French_lang_choosed; echo $lang_choosed; if(isset($_POST['languageFrench'])) echo "checked='checked'"; ?>>
+									  <span class="checkmarkss"></span>
+									</label>
+								</div>
+							</div>
+						</div>
+		
+					    
+					    			    <button type="submit" class="mx-auto" name="input" style="width:50%;border-radius:20px;font-size:28px;" value="Submit">Submit</button>
+	     					</div>
+			 	</div>
+			 	
+			</div>
+	<script>
+	$(document).ready(function(){
+	    $('[data-toggle="popover"]').popover();   
+	});
+	</script>
+	<input type="hidden" name="primaryKeyValue" id="primaryKeyValue" placeholder="primaryKeyValue" value="<? echo $primaryKeyValue; ?>"> 
+	 <input type="hidden" name="xml_id" id="xml_id" placeholder="xml_id" value="<? echo $xml_id; ?>">  
+		<input type="hidden" id="storeType" name="storeType" value="<?php echo  $storeType; ?>" placeholder="storeType"> 
+		  	 
+		</form>
+	</body>
+</html>
