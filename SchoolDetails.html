@@ -1,0 +1,287 @@
+<!doctype html>
+<? if($editFlag == True){ 
+	//echo "<br>insideadsfasdfasdf";
+	if($storeType == "xml")
+	{
+		//echo "<br>inside xmlsdgdfsgsdrg";
+		$xml=simplexml_load_file("../xml/note.xml") or die("Error: Cannot create object");
+	 	foreach($xml->children() as $student)  //studentDetails
+		{ 
+			if($student['id'] == $xml_id)
+			{
+				 
+				$retainRollNo = $student->SchoolDetails->RollNo_10th_std;
+				$retainMaths10 = $student->SchoolDetails->maths_10th_std;
+				$retainScience = $student->SchoolDetails->Science_10std;
+				$retainEnglish =  $student->SchoolDetails->English_10std;
+				$retainTamil = $student->SchoolDetails->Tamil_10std;
+				$retainSocial = $student->SchoolDetails->Social_10std;
+				$retainComputer = $student->SchoolDetails->Computer_10std;
+				
+				$retainRollNo12 = $student->SchoolDetails->RollNo_12th_std;
+				$group =  $student->SchoolDetails->Major;
+				$retainMaths =$student->SchoolDetails->maths_10std;
+				$retainChemistry=$student->SchoolDetails->Chemistry_12std; 
+			}
+		}
+		
+	}
+	else
+	{
+		echo "from html"; 
+		//echo $primaryKeyValue;
+		include("../php/sqlConnectionFile.php");
+		
+		$sql = "select * from SchoolDetails where personalDetails_SchoolDetails_FK = '$primaryKeyValue'  ;";
+		$stmt = sqlsrv_query( $conn, $sql );
+		if( $stmt == false) {
+		    die( print_r( sqlsrv_errors(), true) );
+		}
+		else
+		{
+			//echo "html sql  founded";
+		}
+		while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
+			$retainRollNo = $row['RollNo_10th_std']; 
+			$retainMaths10 = $row['Maths_10std'];
+			$retainScience = $row['Science_10std'];
+			$retainEnglish =  $row['English_10std'];
+			$retainTamil = $row['Tamil_10std'];
+			$retainSocial = $row['Social_10std'];
+			$retainComputer = $row['Computer_10std'];
+			
+			$retainRollNo12 = $row['RollNo_12std'];
+			$group =  $row['Major'];
+			$retainMaths = $row['maths_12std'];
+			$retainChemistry=$row['chemistry_12std']; 
+		} 
+	}
+	$editFlag == "True";
+}
+ ?>
+<html>
+	<head>
+		<title>School Details</title>
+		 <meta charset="utf-8">
+		  <meta name="viewport" content="width=device-width, initial-scale=1">
+		  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+		  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+		  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+		  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+ 		<style>
+ 			body {
+			  font-family: Arial;
+			  color : #000000;
+			  background-color: #ddffdd!important;
+			  font-size:17px;
+			}
+			.img-thumbnail
+			{
+				  position: absolute;
+				    top:2%;
+				    left:37%;
+				    border-radius:50px; 
+				    border:none;
+				
+			}
+			.img-thumbnail-clg
+			{
+				  position: absolute;
+				    top:2%;
+				    left:37%;
+				    border-radius:50px; 
+				    border:none;
+				
+			}
+			.inner-image
+			{
+				height:68px;
+				width:68px;
+				border-radius:50px; 
+			}
+			button {
+				  background-color: #4CAF50;
+				  color: white;
+				  padding: 4px 12px;
+				  margin: auto;
+				  border: none;
+				  cursor: pointer;
+				  width: 100%;
+			}
+			.div2 {
+			  width: 300px;
+			  height: 100px;  
+			  border: 2px solid red;
+			}
+ 		</style>
+	</head>
+	<body class="w3-pale-green">
+		 <? 
+		  $CON = 1;
+		  include("../php/navigationMenu.php");  
+		 ?>
+		<form action="../php/SchoolDetails.php" method="POST">	
+		<div class="container" style="margin-left:324px;">
+			<div class="row ">
+				<div class="col-md-4 ">
+					<div class="container w3-indigo shadow-lg" style="padding:24px;margin-top:64px;border-radius:20px;">
+						<div class="row">
+					 	 	<div class="justify-content-center mx-auto">
+					 	 		<img class="shadow-lg img-thumbnail inner-image"  src="../php/SSLC.png" alt="personalDetailsIcon" >
+					 	 	</div>
+					 	 </div>
+						<div class="mt-3 row">
+					    		<div class="col-md-12">
+					    			<label class=""><center>Enter Roll Number : </center></label> 
+					    			<? if($RollNo10ErrFlag == "True") { ?>
+					    			<a href="#" data-toggle="popover" title="Warning" data-content="<? if($RollNo10EmptyFlag == "True"){ echo "Enter Roll No"; }elseif($RollNo10CharInvalid == "True"){ echo "Enter Roll No as Numeric values only"; }elseif($RollNo10LessThanZeroError == "True"){ echo "Enter Roll No Number from 1 to 100"; } ?>" style="color:red;"><img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+					    			<input type="text" class="form-control" placeholder="Roll Number" name="RollNo10" value="<?php  echo $retainRollNo; ?>" style="border: <? if($RollNo10ErrFlag == "True") { echo "solid 3px red"; } ?> ">
+						    	</div>
+				    		</div>
+				    		
+				    		<div class="mt-3 row">
+				    			<div class="justify-content-center mx-auto">
+				    				<label class="mt-" style=";font-weight:bold;">Mark Scored  </label>
+				    			</div>
+				    		</div>
+				    		
+				    		<div class="row">
+				    			<div class="col-sm-6 col-md-6">
+				    				<label>Maths  </label>
+					    			<? if($maths10ErrFlag == "True") { ?> 
+					    			<a href="#" data-toggle="popover" title="Warning" data-content="<?php if($mathsEmptyFlag == True) { echo "Enter Maths Mark"; } elseif($mathsCharInvalid == True){ echo "Enter Maths Marks form 1 to 100"; }elseif($mathsLessThanZeroError == True) { echo "Enter Maths Marks form 1 to 100";}elseif($mathsGreaterThanZeroError == True){ echo "Enter Maths Marks form 1 to 100"; } ?>" style="color:red;">
+					    			<img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+					    			<input type="text" class="form-control" placeholder="Maths"  name="maths10" value="<?php echo $retainMaths10;?>"  style="border: <? if($maths10ErrFlag == "True") { echo "solid 3px red"; } ?> ">
+					    		</div>
+					    	
+					    		<div class="col-sm-6 col-md-6">
+					    			<label>Science  </label>
+					    			<? if($scienceErrFlag == "True") { ?>
+					    			<a href="#" data-toggle="popover" title="Warning" data-content="<? if($scienceEmptyFlag == "True"){ echo "Enter Science Mark "; }elseif($scienceCharInvalid == "True"){ echo "Enter Science Mark from 1 to 100"; }elseif($scienceLessThanZeroError == "True") { echo "Enter Science Mark  from 1 to 100";}elseif($scienceGreaterThanZeroError == "True"){ echo "Enter Science Mark  from 1 to 100"; } ?>" style="color:red;">
+					    			<img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+					    			<input type="text" class="form-control" placeholder="Science" name="science" value="<?php echo $retainScience;?>"  style="border: <? if($scienceErrFlag == "True") { echo "solid 3px red"; } ?> ">
+					    		</div>
+				    		</div>
+				    		<div class="row">
+				    			<div class="col-sm-6 col-md-6">
+						    		<label>English  </label>
+						    		<? if($englishErrFlag == "True") { ?>
+						    		<a href="#" data-toggle="popover" title="Warning" data-content="<? if($englishEmptyFlag == "True"){ echo "Enter English Mark "; }elseif($englishCharInvalid == "True"){ echo "Enter English Mark from 1 to 100"; }elseif($englishLessThanZeroError == "True") { echo "Enter English Mark  from 1 to 100";}elseif($englishGreaterThanZeroError == "True"){ echo "Enter English Mark  from 1 to 100"; } ?>"  style="color:red;">
+						    		<img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+						    		<input type="text" class="form-control" placeholder="English" name="english" value="<?php echo $retainEnglish;?>" style="border: <? if($englishErrFlag == "True") { echo "solid 3px red"; } ?> ">
+					    		</div>
+					    		<div class=" col-sm-6 col-md-6" >
+						    		<label>Tamil  </label>
+						    		<? if($tamilErrFlag == "True") { ?>
+						    		<a href="#" data-toggle="popover" title="Warning" data-content="<? if($tamilEmptyFlag == "True"){ echo "Enter Tamil Mark "; }elseif($tamilCharInvalid == "True"){ echo "Enter Tamil Mark from 1 to 100"; }elseif($tamilLessThanZeroError == "True") { echo "Enter Tamil Mark  from 1 to 100";}elseif($tamilGreaterThanZeroError == "True"){ echo "Enter Tamil Mark  from 1 to 100"; } ?>"  style="color:red;">
+						    		<img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+						    		<input type="text" class="form-control" placeholder="Tamil" name="tamil" value="<?php echo $retainTamil;?>" style="border: <? if($tamilErrFlag == "True") { echo "solid 3px red"; } ?> ">
+					    		</div>
+				    		</div>
+				    		<div class="row">
+				    			<div class="col-md-6">
+						    		<label>Social  </label>
+						    		<? if($socialErrFlag == "True") { ?>
+						    		<a href="#" data-toggle="popover" title="Warning" data-content="<? if($socialEmptyFlag == "True"){ echo "Enter Social Mark "; }elseif($socialCharInvalid == "True"){ echo "Enter Social Mark from 1 to 100"; }elseif($socialLessThanZeroError == "True") { echo "Enter Social Mark  from 1 to 100";}elseif($socialGreaterThanZeroError == "True"){ echo "Enter Social Mark  from 1 to 100"; } ?>" style="color:red;">
+						    		<img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+						    		<input type="text" class="form-control" placeholder="Social" name="social" value="<?php echo $retainSocial;?>" style="border: <? if($socialErrFlag == "True") { echo "solid 3px red"; } ?> ">
+						    	</div>
+						    	<div class="col-md-6">
+						    		<label>Computer </label>
+						    		<? if($computerErrFlag == "True") { ?>
+						    		<a href="#" data-toggle="popover" title="Warning" data-content="<? if($computerEmptyFlag == "True"){ echo "Enter Computer Mark "; }elseif($computerCharInvalid == "True"){ echo "Enter Computer Mark from 1 to 100"; }elseif($computerLessThanZeroError == "True") { echo "Enter Computer Mark  from 1 to 100";}elseif($computerGreaterThanZeroError == "True"){ echo "Enter Computer Mark  from 1 to 100"; } ?>" style="color:red;">
+						    		<img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+						    		<input type="text" class="form-control" placeholder="Computer" name="computer" value="<?php echo $retainComputer;?>" style="border: <? if($computerErrFlag == "True") { echo "solid 3px red"; } ?> ">
+					    		</div>
+				    		</div>
+				    		 
+					</div>
+				</div>
+				
+				<div class="col-md-4  ">
+					<div class="container w3-indigo shadow-lg" style="padding:24px;margin-top:64px;border-radius:20px;">
+						<div class="row">
+					 	 	<div class="justify-content-center mx-auto shadow-lg">
+					 	 		<img class="img-thumbnail inner-image shadow-lg"  src="../php/HSC.jpg" alt="personalDetailsIcon" >
+					 	 	</div>
+					 	 </div>
+						<div class="mt-3 row">
+					    		<div class="col-md-12">
+					    			 <label class="">Enter Roll Number  </label> 
+					    			<? if($RollNo12ErrFlag == "True") { ?>
+				    	   			 <a href="#" data-toggle="popover" title="Warning" data-content="<? if($RollNo12EmptyFlag == "True"){ echo "Enter Roll Number "; }elseif($RollNo12CharInvalid == "True"){ echo "Enter Roll Number as numeric only"; }elseif($RollNo12LessThanZeroError == "True") { echo "Enter Roll Number as numeric only";}?>" style="color:red;">
+				    	   			 <img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+								<input type="text" class="form-control" placeholder="Roll Number"   name="RollNo12"  value="<?php echo $retainRollNo12;?>"  style="border: <? if($RollNo12ErrFlag == "True") { echo "solid 3px red"; } ?> ">
+						    	</div>
+				    		</div>
+				    		
+				    		<div class="mt-3 row">
+				    			<div class="col-md-12">
+				    				<label class="mt-" style=";font-weight:bold;">choose Major  </label>
+				    				<? if($groupErrFlag == "True") { ?>
+				    	    			<a href="#" data-toggle="popover" title="Warning" data-content="<? if($groupEmptyFlag == "True"){ echo "Select Major "; }?>">
+				    	   			 <img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+					
+				    			</div>
+				    		</div>
+				    		
+				    		<div class="row">
+				    			<div class="col-sm-6 col-md-6">
+				    				<div class="<? if($groupEmptyFlag == "True"){echo "div2";}?>">
+								    	 <div class="container" style="margin-left:40px;width:300px;font-size:18px;">
+										  <div class="radio">
+										      	<label><input type="radio" name="group" value="Biology"   <?php if (isset($group) && $group=="Biology") echo "checked";?> style="border: solid 3px red;">Biology</label>
+										    </div>
+										    <div class="radio">
+										      	<label><input type="radio" name="group" value="Computer_Science" <?php if (isset($group) && $group=="Computer_Science") echo "checked";?>>Computer_Science</label>
+										    </div>
+										    <div class="radio  ">
+										      	<label><input type="radio" name="group" value="Commerce" <?php if (isset($group) && $group=="Commerce") echo "checked";?>>Commerce</label>
+										    </div>
+									    </div>	
+								</div>
+					    		</div>
+					    	
+					    		 
+				    		</div>
+				    		<div class="mt-4 row">
+				    			<div class="col-sm-6 col-md-6">
+						    		<label>Maths  </label>
+					    			<? if($mathsErrFlag == "True") { ?>
+				    				<a href="#" data-toggle="popover" title="Warning" data-content="<? if($mathsEmptyFlag == "True"){ echo "Enter Maths Mark "; }elseif($mathsCharInvalid == "True"){ echo "Enter Maths Mark from 1 to 200"; }elseif($mathsLessThanZeroError == "True") { echo "Enter Maths Mark  from 1 to 200";}elseif($mathsGreaterThanZeroError == "True"){ echo "Enter Maths Mark  from 1 to 200"; } ?>" style="color:red;">
+				    				<img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+								<input type="text" class="form-control" placeholder="Maths" name="maths"  value="<?php echo $retainMaths;?>" style="border: <? if($mathsErrFlag == "True") { echo "solid 3px red"; } ?> ">
+					    		</div>
+					    		<div class=" col-sm-6 col-md-6" >
+						    		<label>Chemistry  </label>
+						    		<? if($chemistryErrFlag == "True") { ?>
+					    			<a href="#" data-toggle="popover" title="Warning" data-content="<? if($chemistryEmptyFlag == "True"){ echo "Enter Chemistry Mark "; }elseif($chemistryCharInvalid == "True"){ echo "Enter chemistry Mark from 1 to 200"; }elseif($chemistryLessThanZeroError == "True") { echo "Enter chemistry Mark  from 1 to 200";}elseif($chemistryGreaterThanZeroError == "True"){ echo "Enter chemistry Mark  from 1 to 200"; } ?>" style="color:red;">
+					    			<img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+								<input type="text" class="form-control" placeholder="Science" name="chemistry"  value="<?php echo $retainChemistry;?>" style="border: <? if($chemistryErrFlag == "True") { echo "solid 3px red"; } ?> ">
+					    		</div>
+				    		</div>
+				    		
+				    		 
+					</div>
+					<div class="row" style="margin-right:424px;">
+						  	<div class="col-xs-12 mx-auto  ">
+					  		    	   <button type="submit" class="mt-4  " name="input" style="border-radius:20px;font-size:24px;" value="Submitss">Submit</button>
+	     						</div>
+	     					  </div>
+				</div>
+			</div>
+		</div>
+		<input type="hidden" name="primaryKeyValue" id="primaryKeyValue" placeholder="primaryKeyValue" value="<? echo $primaryKeyValue; ?>"> 
+		<input type="hidden" name="EditprimaryKey" id="EditprimaryKey" placeholder="EditprimaryKey" value="<? echo $EditprimaryKey; ?>"> 
+		<input type="hidden" name="xml_id" id="xml_id" placeholder="xml_id" value="<? echo $xml_id; ?>"> 
+		  <input type="hidden" id="storeType" name="storeType" value="<?php echo  $storeType; ?>" placeholder="storeType"> 
+		    	 
+		</form>
+	</body>
+</html>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover();   
+});
+</script>
