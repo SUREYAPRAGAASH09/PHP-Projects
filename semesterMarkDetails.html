@@ -1,0 +1,234 @@
+<!doctype html>
+<? 
+
+if($ErrorFlag == False or  $editFlag == True){
+	//echo "inside editFlag";
+	//echo "value showing";
+	include("../php/sqlConnectionFile.php");
+	//echo $primaryKeyValue;
+	$sql = "select Student_Roll_No,Department,subject_1,subject_2,subject_3,subject_4,subject_5,subject_6 from  College_Details where personalDetails_College_Details_FK = '$primaryKeyValue' and semester='$semNum'  ;";
+	$stmt = sqlsrv_query( $conn, $sql );
+	if( $stmt == false) {
+	    die( print_r( sqlsrv_errors(), true) );
+	}
+	else
+	{
+		//echo "html sql  founded<br>";
+		//echo "sss";
+	}
+	
+	while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) 
+	{
+			//echo "sss";
+			$subjectFlag = True;
+			// echo $row['subject_1'] . "<br>";
+			 $subject_1 = $row['subject_1'];
+			// echo $row['subject_2'] . "<br>"; 
+			 $subject_2 = $row['subject_2'];
+			// echo $row[5] . "<br>"; 
+			  $subject_3 = $row['subject_3'];
+			// echo $row[6] . "<br>"; 
+			   $subject_4 = $row['subject_4'];
+			// echo $row[7] . "<br>"; 
+			 $subject_5 = $row['subject_5'];
+			// echo $row[8] . "<br>"; 
+			 $subject_6 = $row['subject_6'];
+		
+	} 
+}
+?>
+<html>
+	<head>
+		<title>Get Marks</title>
+		 <meta charset="utf-8">
+		  <meta name="viewport" content="width=device-width, initial-scale=1">
+		  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+		  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+		  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+		  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+		  <style>
+		  	body {
+			  font-family: Arial;
+			  color : #000000;
+			  background-color: #ddffdd!important;
+			  font-size:17px;
+			}
+			.img-thumbnail-clg
+			{
+				  position: absolute;
+				    top:90px;
+				    left:47%;
+				    border-radius:50px; 
+				    border:none;
+				
+			}
+			.inner-image
+			{
+				height:68px;
+				width:68px;
+				border-radius:50px; 
+			}
+			button {
+				  background-color: #4CAF50;
+				  color: white;
+				  padding: 4px 12px;
+				  margin: auto;
+				  border: none;
+				  cursor: pointer;
+				  width: 100%;
+			}
+		</style>
+	</head>
+	<body>
+	  	<? 
+		  $CON = 1;
+		  include("../php/navigationMenu.php");  
+		 ?>
+		<form action="../php/semesterMarkDetails.php" method="POST">
+		<label id="d"></label><br>
+		
+		<div class="container w3-indigo" style="width:50%;margin-top:35px;padding:24px;border-radius:20px;">
+			<div class="row">
+		 	 	<div class="justify-content-center mx-auto">
+		 	 		<img class="shadow-lg  img-thumbnail-clg  inner-image"  src="../php/collegeIcon.png" alt="personalDetailsIcon" >
+		 	 	</div>
+		 	 </div>
+			<div class="mx-auto">
+					 <label class="">choose semester : </label> 
+					     	<? if($majorErrFlag == "True") { ?>
+						<a href="#" data-toggle="popover" title="Warning" data-content="<? if($majorEmptyFlag == "True"){ echo "Select Department"; } ?>" style="color:red;">
+						<img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+						<? 
+							if($input != "updates")
+							{
+								//echo "inside update";
+								include("../php/sqlConnectionFile.php");
+								//echo "inside semster";
+								$sql = "select * from College_Details where personalDetails_College_Details_FK = '$primaryKeyValue'";
+								$stmt = sqlsrv_query( $conn, $sql );
+								if( $stmt == false) {
+								    die( print_r( sqlsrv_errors(), true) );
+								}
+								else
+								{
+									//echo "html sql  founded<br>";
+									//echo "sss";
+								}
+								$semesterNumberList=array();
+								
+								//print_r($a);
+								while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) 
+								{
+									//echo $row['semester'];
+									array_push($semesterNumberList,$row['semester']);	
+								}
+								//print_r($semesterNumberList);
+								//echo max($semesterNumberList);
+								$defaultSemesterList = [1,2,3,4,5,6,7,8];
+								$result = array_diff($defaultSemesterList, $semesterNumberList);
+								//print_r($result);
+								
+							}
+						?>
+						<script type="text/javascript">
+					   	    document.getElementById('ggg').value = "asdf";
+						    document.getElementById('semesterNumber').value = "<?php echo $semNum;?>";
+						   </script>
+						  <?  echo max(semesterNumberList); ?>
+						<select name="semNum" class="form-control"  id="semesterNumber"  style="border: <? if($majorErrFlag == "True") { echo "solid 3px red"; } ?>;width:100%; ">
+						       <?php
+						       	
+							if($input != "updates")
+							{
+								foreach($result as $values)
+								{?>
+									<option   value="<?php echo $values;?>"><?php echo $values;?></option>
+								<? }?>?>	//add part
+								
+								
+								
+							<?}
+							else
+							{ ?>	
+								<option   value="<? echo $retainSemesterNumber; ?>"><? echo $retainSemesterNumber; ?></option>	
+								
+							<? } ?>
+						      
+						 </select>
+						 <label id="ggg"></label>
+					   	    
+				</div>
+			<script>
+			$(document).ready(function(){
+			    $('[data-toggle="popover"]').popover();   
+			});
+			</script>
+			<div class="mt-4 row">
+				<div class="col-md-6">
+					<label id="subject_1">subject 1</label>
+					<? if($subject_1ErrFlag == "True") { ?>
+					<a href="#" data-toggle="popover" title="Warning" data-content="<? if($subject_1EmptyFlag == "True"){ echo "Enter Mark"; }elseif($subject_1CharInvalid == "True"){ echo "Enter Roll No as Numeric values only"; }elseif($subject_1LessThanZeroError == "True"){ echo "Enter Mark range from 1 to 100"; }elseif($subject_1GreaterThanZeroError == "True"){ echo "Enter Mark range from 1 to 100"; } ?>" >
+					<img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+					<input type="text" class="form-control" placeholder="" name="subject_1" style="border: <? if($subject_1ErrFlag == "True") { echo "solid 3px red"; } ?>" value="<?php  echo $subject_1;  ?>">
+				</div>
+				<div class="col-md-6">
+					<label id="subject_2">subject 2</label>
+					<? if($subject_2ErrFlag == "True") { ?>
+					<a href="#" data-toggle="popover" title="Warning" data-content="<? if($subject_2EmptyFlag == "True"){ echo "Enter Mark"; }elseif($subject_2CharInvalid == "True"){ echo "Enter Roll No as Numeric values only"; }elseif($subject_2LessThanZeroError == "True"){ echo "Enter Mark range from 1 to 100"; }elseif($subject_2GreaterThanZeroError == "True"){ echo "Enter Mark range from 1 to 100"; } ?>" >
+					<img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+					<input type="text" class="form-control" placeholder="" name="subject_2" style="border: <? if($subject_2ErrFlag == "True") { echo "solid 3px red"; } ?>" value="<?php echo $subject_2; ?>">
+				</div>
+			</div>
+			<div class="mt-4 row">
+				<div class="col-md-6">
+					<label id="subject_3"> subject 3</label>
+					<? if($subject_3ErrFlag == "True") { ?>
+					<a href="#" data-toggle="popover" title="Warning" data-content="<? if($subject_3EmptyFlag == "True"){ echo "Enter Mark"; }elseif($subject_3CharInvalid == "True"){ echo "Enter Roll No as Numeric values only"; }elseif($subject_3LessThanZeroError == "True"){ echo "Enter Mark range from 1 to 100"; }elseif($subject_3GreaterThanZeroError == "True"){ echo "Enter Mark range from 1 to 100"; } ?>" >
+					<img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+					<input type="text" class="form-control" placeholder="" name="subject_3" style="border: <? if($subject_3ErrFlag == "True") { echo "solid 3px red"; } ?>" value="<?php  echo $subject_3; ?>">
+				</div>
+				<div class="col-md-6">
+					<label id="subject_4"> subject 4 </label>
+					<? if($subject_4ErrFlag == "True") { ?>
+					<a href="#" data-toggle="popover" title="Warning" data-content="<? if($subject_4EmptyFlag == "True"){ echo "Enter Mark"; }elseif($subject_4CharInvalid == "True"){ echo "Enter Roll No as Numeric values only"; }elseif($subject_4LessThanZeroError == "True"){ echo "Enter Mark range from 1 to 100"; }elseif($subject_4GreaterThanZeroError == "True"){ echo "Enter Mark range from 1 to 100"; } ?>" >
+					<img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+					<input type="text" class="form-control" placeholder="" name="subject_4" style="border: <? if($subject_4ErrFlag == "True") { echo "solid 3px red"; } ?>" value="<?php echo $subject_4; ?>">
+				</div>
+			</div>
+			<div class="mt-4 row">
+				<div class="col-md-6">
+					<label id="subject_5">subject 5</label>
+					<? if($subject_5ErrFlag == "True") { ?>
+					<a href="#" data-toggle="popover" title="Warning" data-content="<? if($subject_5EmptyFlag == "True"){ echo "Enter Mark"; }elseif($subject_5CharInvalid == "True"){ echo "Enter Roll No as Numeric values only"; }elseif($subject_5LessThanZeroError == "True"){ echo "Enter Mark range from 1 to 100"; }elseif($subject_5GreaterThanZeroError == "True"){ echo "Enter Mark range from 1 to 100"; } ?>" >
+					<img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+					<input type="text" class="form-control" placeholder="" name="subject_5" style="border: <? if($subject_5ErrFlag == "True") { echo "solid 3px red"; } ?>" value="<?php echo $subject_5; ?>">
+				</div>
+				<div class="col-md-6">
+					<label id="subject_6">subject 6</label>
+					<? if($subject_6ErrFlag == "True") { ?>
+					<a href="#" data-toggle="popover" title="Warning" data-content="<? if($subject_6EmptyFlag == "True"){ echo "Enter Mark"; }elseif($subject_6CharInvalid == "True"){ echo "Enter Roll No as Numeric values only"; }elseif($subject_6LessThanZeroError == "True"){ echo "Enter Mark range from 1 to 100"; }elseif($subject_6GreaterThanZeroError == "True"){ echo "Enter Mark range from 1 to 100"; } ?>" >
+					<img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+					<input type="text" class="form-control" placeholder="" name="subject_6" style="border: <? if($subject_6ErrFlag == "True") { echo "solid 3px red"; } ?>" value="<?php  echo $subject_6; ?>">
+				</div>
+			</div>
+			 <div class="row">
+			  	<div class="justify-content-center mx-auto ">
+		  		    	   <button type="submit" class="mt-4 mx-auto" name="input" style="border-radius:20px;font-size:24px;" value="Back" >Back</button>
+				</div>
+				<div class="justify-content-center mx-auto ">
+		  		    	   <button type="submit" class="mt-4 mx-auto" name="input" style="border-radius:20px;font-size:24px;" value="Save" >Save</button>
+				</div>
+			  </div>
+			 
+		</div>
+		  <input type="hidden" id="semNum" name="semNumber" value="<?php  echo  $semesterNumber; ?>" placeholder="semesterNumber">
+		  <input type="hidden" id="RollNoCLG" name="RollNoCLG" value="<?php  echo  $RollNoCLG; ?>" placeholder="RollNoCLG">
+		  <input type="hidden" id="Department" name="Department" value="<?php  echo  $Department; ?>" placeholder="Department">
+		  <input type="hidden" name="primaryKeyValue" id="primaryKeyValue" placeholder="primaryKeyValue" value="<? echo $primaryKeyValue; ?>"> 
+		<input type="hidden" name="xml_id" id="xml_id" placeholder="xml_id" value="<? echo $xml_id; ?>"> 
+		<input type="hidden" id="storeType" name="storeType" value="<?php echo  $storeType; ?>" placeholder="storeType"> 
+		  
+		</form>
+	</body>
+</html>
