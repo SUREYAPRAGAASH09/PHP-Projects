@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+	<head>
+		<title>example</title>
+	</head>
+	
+	<body>
+		 <select id="Department"  >
+		         <option value="CSE"   >CSE</option>
+		         <option value="ECE"   >ECE</option>
+		 </select>
+   	  	 
+   	  	 <select id="semester" onchange="myFunction()">
+   	  	 	<option value="" disabled selected>Select semester</option>
+   	  	 	<option value="1">1</option>
+   	  	 	<option value="2">2</option>
+   	  	 	<option value="3">3</option>
+   	  	 	<option value="4">4</option>
+   	  	 	<option value="5">5</option>
+   	  	 	<option value="6">6</option>
+   	  	 	<option value="7">7</option>
+   	  	 	<option value="8">8</option>
+   	  	 </select> 
+   	  	 <p id="demo"></p>
+   	  	 <label id="sub1"></label>
+   	  	  
+   	  	 
+   	  	 <script>
+		function myFunction() {
+		  var Department = document.getElementById("Department").value;
+		  var semester = document.getElementById("semester").value;
+		 if(Department == "CSE" && semester == "1")
+		  {
+		      document.getElementById("demo").innerHTML = "You selected department: " + Department;
+		 
+		      document.getElementById("sub1").innerHTML = "You selected subject: " + semester;
+		  }
+		  else
+		  {
+		  document.getElementById("demo").innerHTML = "";
+		 
+		document.getElementById("sub1").innerHTML = "" ;
+		 }
+		}
+		</script>
+	</body>	
+</html>

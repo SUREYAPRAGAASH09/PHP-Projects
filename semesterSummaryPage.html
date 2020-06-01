@@ -1,0 +1,208 @@
+<!doctype html>
+<html>
+	<head>
+	<?	
+	if($storeType != "xml")
+	{
+		//echo "asdf";
+		include("../php/sqlConnectionFile.php");
+		$sql = "select * from College_Details where personalDetails_College_Details_FK = '$primaryKeyValue' ORDER BY semester ASC";
+		$stmt = sqlsrv_query( $conn, $sql );
+		if( $stmt == false) {
+		   die( print_r( sqlsrv_errors(), true) );
+		}
+		else
+		{
+			//echo "<br>html sql  founded";
+			//$QuestionFlag = True;
+		}
+		$params = array();
+		$options =  array( "Scrollable" => SQLSRV_CURSOR_KEYSET );
+		$stmt = sqlsrv_query( $conn, $sql , $params, $options );
+		$row_count = sqlsrv_num_rows( $stmt );	
+		//echo "row_count:::$row_count";
+		if($row_count == 0)
+		{
+			
+			$QuestionFlag = True;
+		}
+	}
+			
+	?>
+		<meta charset="utf-8">
+		  <meta name="viewport" content="width=device-width, initial-scale=1">
+		  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+		  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+		  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+		  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+		  <style>
+ 			body {
+			  font-family: Arial;
+			  color : #000000;
+			  background-color: #ddffdd!important;
+			  font-size:17px;
+			}
+			td
+			{
+				color:white;
+			}
+		</style>
+	</head>
+	<body>
+	<? 
+		  $CON = 1;
+		  include("../php/navigationMenu.php");  
+		 ?>
+	<form action="../php/semesterSummaryPage.php" method="POST">
+		<div class="container w3-deep-orange" style="width:60%;border-radius:34px;margin-top:24px;padding:12px;">
+	 			<div class="row">
+	 				<div class=" justify-content-center mx-auto ">
+	 						<h1>Do you want to Add semester marks?</h1>
+	 				</div>
+	 			</div>
+	 			<div class = "row row-margin-bottom"  >	 
+					<div class="  justify-content-center  mx-auto "> 
+						<input type="submit" class="shadow mystyle btn-light btn " name="input" value = "Yes" style="font-size : 25px; ">
+						<input type="submit" class=" shadow mystyle btn-light btn" name="input" value = "No" style="font-size : 25px; ">
+
+					</div>	 
+				</div>
+	 				 	
+	  		</div>
+		<div class="container " style="margin-top:24px;">
+		 
+			<div class=" table-responsive-sm w3-indigo">
+			    	<table class="table  table-hover">
+					      <thead class="w3-indigo">
+						        <tr>
+							          <th>Semester</th>
+							          <th>subject 1</th>
+							          <th>subject 2</th>
+							          <th>subject 3</th>
+							          <th>subject 4</th>
+							          <th>subject 5</th>
+							          <th>subject 6</th>
+							          <th>Update</th>
+							          <th>Delete</th>
+							
+						</tr>
+					</thead>
+				<? if($storeType == "xml"){ ?>
+					<tbody>
+						<? $xml=simplexml_load_file("../xml/note.xml") or die("Error: Cannot create object");
+						 
+						foreach($xml->children() as $student)  //studentDetails
+						{ 
+							foreach($student->children() as $sem) // per,sch,coll,sems
+							 { 
+							 	foreach($sem->children() as $sub) 
+						 		{
+						 			if($sub->personalDetails_semsterMarkDetails_ID == $xml_id)
+						 			{  ?>
+						<tr>
+							 <td><? echo $sub['number']; ?></td>
+							 <td><?  echo $sub->Subject_1; ?></td>
+							 <td><?  echo $sub->Subject_2;?></td>
+							 <td><?  echo $sub->Subject_3; ?></td>
+							 <td><?  echo $sub->Subject_4; ?></td>
+							 <td><?  echo $sub->Subject_5; ?></td>
+							 <td><?  echo  $sub->Subject_6; ?></td>
+							 <td><a     class="shadow mystyle btn-primary btn " href="semesterSummaryPage.php?semNum=<? echo   $sub['number'];?>&input=updates&xml_id=<? echo $xml_id; ?>&storeType=xml">update</a></td>
+							 <td><a     class="shadow mystyle btn-danger btn "   href="semesterSummaryPage.php?semNum=<? echo  $sub['number']; ?>&input=Delete&xml_id=<? echo $xml_id; ?>&storeType=xml">Delete</a> </td>
+					           		
+							   
+						</tr>
+						 <?  }}}} ?>
+					</tbody>
+					 
+				<? } else { ?>
+					<tbody>
+						<tr>
+						        <? while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) { ?>
+							          <td><? echo $row['semester']; ?></td>
+							          <td><? echo $row['subject_1']; ?></td>
+							         <td><? echo $row['subject_2']; ?></td>
+							          <td><? echo $row['subject_3']; ?></td>
+							           <td><? echo $row['subject_4']; ?></td>
+							            <td><? echo $row['subject_5']; ?></td>
+							             <td><? echo $row['subject_6']; ?></td>
+							           <td><a     class="shadow mystyle btn-primary btn " href="semesterSummaryPage.php?semNum=<? echo  $row['semester']; ?>&input=updates&primaryKeyValue=<? echo $row['personalDetails_College_Details_FK']; ?>&RollNoCLG=<? echo $row['Student_Roll_No']; ?>&Department=<?echo $row['Department'];?>">update</a></td>
+					         		          <td><a     class="shadow mystyle btn-danger btn "    href="semesterSummaryPage.php?semNum=<? echo  $row['semester']; ?>&input=Delete&primaryKeyValue=<? echo $row['personalDetails_College_Details_FK']; ?>&RollNoCLG=<? echo $row['Student_Roll_No']; ?>&Department=<?echo $row['Department'];?>">Delete</a> </td>
+					           			 <!-- <input type="text" id="PrimaryKey_ID" name="PrimaryKey_ID" value="<?php echo  $row[5]; ?>" placeholder="PrimaryKey_ID"> -->
+						        </tr>
+						    
+					</tbody>
+					<? } ?>
+				<? } ?>		
+			
+	   	 		</table>
+	 	 	</div>
+	 		 <? if($modelOpenFlag  == "True") { ?>
+				  
+			 <script type='text/javascript'>
+			$(document).ready(function(){
+			$('#myModal').modal('show');
+			});
+			</script>
+		<? } ?>	
+	 	<input type="hidden" id="RollNoCLG" name="RollNoCLG" value="<?php  echo  $RollNoCLG; ?>" placeholder="RollNoCLG">
+		<input type="hidden" id="Department" name="Department" value="<?php  echo  $Department; ?>" placeholder="Department">
+		<input type="hidden" name="primaryKeyValue" id="primaryKeyValue" placeholder="primaryKeyValue" value="<? echo $primaryKeyValue; ?>"> 
+		<input type="hidden" name="semNum" id="semNum" placeholder="semNum" value="<? echo $semNum; ?>"> 
+		<input type="hidden" name="xml_id" id="xml_id" placeholder="" value="<? echo $xml_id; ?>"> 
+		  <input type="hidden" id="storeType" name="storeType" value="<?php echo  $storeType; ?>" placeholder="storeType"> 
+		
+		</div>
+		<div class="modal" id="myModal">
+    			<div class="modal-dialog">
+     				 <div class="modal-content">
+      
+					        <!-- Modal Header -->
+					        <div class="modal-header">
+					         	 <h4 class="modal-title">Delete</h4>
+					          	<button type="button" class="close" data-dismiss="modal">&times;</button>
+					        </div>
+        
+					        <!-- Modal body -->
+					        <div class="modal-body">
+						        <? if($modelDataDeleteedFlag == "True") { ?>
+						        	<b>Data Erased<b>
+						        <? } else { ?>
+						        	<b><span>Are You sure  
+						          	Do You Want to delete?</span></b>
+						          <? } ?>
+					        </div>
+        
+      						  <!-- Modal footer -->
+      					<?	
+					if($storeType == "xml") 
+					{?>
+					  <div class="modal-footer">
+						         <? if($modelDataDeleteedFlag == "True") { ?>
+						         	<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+						         <? } else { ?>
+						            <a     class="  btn-danger btn "    href="semesterSummaryPage.php?semNum=<? echo   $sub['number'];?>&input=Delete&xml_id=<? echo $xml_id; ?>&storeType=xml&&displayFlag=True">Delete</a> 
+						        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+						         <? } ?>
+					        </div>
+					<? } else { 
+					?>
+					        <div class="modal-footer">
+						         <? if($modelDataDeleteedFlag == "True") { ?>
+						         	<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+						         <? } else { ?>
+						            <a     class="  btn-danger btn "    href="semesterSummaryPage.php?semNum=<? echo  $semNum; ?>&input=Delete&RollNoCLG=<? echo $RollNoCLG; ?>&Department=<?echo $Depart;?>&displayFlag=True&primaryKeyValue=<? echo $primaryKeyValue; ?>">Delete</a> 
+						        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+						         <? } ?>
+					        </div>
+					       <? } ?>
+        
+      				</div>
+    			</div>
+  		</div>
+  
+ 
+	</form>
+	</body>
+</html>

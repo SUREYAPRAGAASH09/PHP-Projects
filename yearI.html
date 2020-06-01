@@ -1,0 +1,202 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Academic Details</title>
+		 <meta charset="utf-8">
+		  <meta name="viewport" content="width=device-width, initial-scale=1">
+		  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+		  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+		  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+		  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+		  <style>
+		  body {
+			  font-family: Arial;
+			  color : #000000;
+			  background-color: #ddffdd!important;
+			  font-size:17px;
+			}
+		.img-thumbnail
+			{
+				  position: absolute;
+				    top:1%;
+				    left:47%;
+				    border-radius:50px; 
+				    border:none;
+				
+			}
+			 
+			.inner-image
+			{
+				height:68px;
+				width:68px;
+				border-radius:50px; 
+			}
+			button {
+				  background-color: #4CAF50;
+				  color: white;
+				  padding: 4px 12px;
+				  margin: auto;
+				  border: none;
+				  cursor: pointer;
+				  width: 100%;
+			}
+		</style>
+	</head>
+	<body>
+	<form action="../php/yearI.php" method="POST">
+		<div class="container w3-light-blue" style="padding:24px;margin-top:55px;border-radius:20px;" >
+			<div class="row">
+		 	 	<div class="justify-content-center mx-auto">
+		 	 		<img class="shadow-lg img-thumbnail inner-image"  src="../php/FirstYear.jpg" alt="FirstYear" >
+		 	 	</div>
+		 	 </div>
+			 
+			<div class="mt-3 row">
+				<div class="col-md-6">
+					<div class="container w3-indigo" style="padding:24px;border-radius:20px;">
+						<div class="row">
+							<div class="mx-auto">
+								<label>Semester - I</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<label>English-I</label>
+								<? if($English_1stsemErrFlag == "True") { ?>
+				    	   			 <a href="#" data-toggle="popover" title="Warning" data-content="<? if($English_1stsemEmptyFlag == "True"){ echo "Enter 1st sem English mark "; }elseif($English_1stsemCharInvalid == "True"){ echo "Enter Roll Number as numeric only"; }elseif($English_1stsemLessThanZeroError == "True") { echo "1st sem English mark cannot be less than  0";}elseif($English_1stsemGreaterThanZeroError == "True") { echo "1st sem English mark cannot be greater than 100";}?>" >
+				    	   			 <img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+								<input type="text" class="form-control" placeholder="English-I"  name="English_1stsem" value="<?php echo $retainEnglish_1stsem;?>" style="border: <? if($English_1stsemErrFlag == "True") { echo "solid 3px red"; } ?>" >
+							</div>
+							<div class="col-md-6">
+								<label>Physics - I</label>
+								<? if($Physics_1stsemErrFlag == "True") { ?>
+				    	   			<a href="#" data-toggle="popover" title="Warning" data-content="<? if($Physics_1stsemEmptyFlag == "True"){ echo "Enter 1st sem Physics mark "; }elseif($Physics_1stsemCharInvalid == "True"){ echo "Enter 1st sem Physics mark as numeric only"; }elseif($Physics_1stsemLessThanZeroError == "True") { echo "1st sem Physics mark cannot be less than  0";}elseif($Physics_1stsemGreaterThanZeroError == "True") { echo "1st sem Physics mark cannot be greater than 100";}?>">
+				    	   			 <img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+								<input type="text" class="form-control" placeholder="Physics - I"  name="Physics_1stsem" value="<?php echo $retainPhysics_1stsem;?>" style="border: <? if($Physics_1stsemErrFlag == "True") { echo "solid 3px red"; } ?>"  >
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<label>Maths-I</label>
+								<? if($Maths_1stsemErrFlag == "True") { ?>
+				    	   			<a href="#" data-toggle="popover" title="Warning" data-content="<? if($Maths_1stsemEmptyFlag == "True"){ echo "Enter 1st sem Maths mark "; }elseif($Maths_1stsemCharInvalid == "True"){ echo "Enter 1st sem Maths as numeric only"; }elseif($Maths_1stsemLessThanZeroError == "True") { echo "1st sem Maths mark cannot be less than  0";}elseif($Maths_1stsemGreaterThanZeroError == "True") { echo "1st sem Maths mark cannot be greater than 100";}?>">
+				    	   			 <img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+								<input type="text" class="form-control" placeholder="Maths-I"  name="Maths_1stsem"  value="<?php echo $retainMaths_1stsem;?>" style="border: <? if($Maths_1stsemErrFlag == "True") { echo "solid 3px red"; } ?>" >
+							</div>
+							<div class="col-md-6">
+								<label>Engg Graphics</label>
+								<? if($Engg_Graphics_1stsemErrFlag == "True") { ?>
+				    	   			<a href="#" data-toggle="popover" title="Warning" data-content="<? if($Engg_Graphics_1stsemEmptyFlag == "True"){ echo "Enter 1st sem Engg Graphics mark "; }elseif($Engg_Graphics_1stsemCharInvalid == "True"){ echo "Enter  1st sem Engg Graphics as numeric only"; }elseif($Engg_Graphics_1stsemLessThanZeroError == "True") { echo "1st sem Engg Graphics mark cannot be less than  0";}elseif($Engg_Graphics_1stsemGreaterThanZeroError == "True") { echo "1st sem Engg Graphics mark cannot be greater than 100";}?>">
+				    	   			 <img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+								<input type="text" class="form-control" placeholder="Engg Graphics"  name="Engg_Graphics_1stsem" value="<?php echo $retainEngg_Graphics_1stsem;?>" style="border: <? if($Engg_Graphics_1stsemErrFlag == "True") { echo "solid 3px red"; } ?>"  >
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<label>Computer</label>
+								<? if($Computer_1stsemErrFlag == "True") { ?>
+				    	   			 <a href="#" data-toggle="popover" title="Warning" data-content="<? if($Computer_1stsemEmptyFlag == "True"){ echo "Enter 1st sem Computer mark "; }elseif($Computer_1stsemCharInvalid == "True"){ echo "Enter 1st sem Computer  as numeric only"; }elseif($Computer_1stsemLessThanZeroError == "True") { echo "1st sem Computer mark cannot be less than  0";}elseif($Computer_1stsemGreaterThanZeroError == "True") { echo "1st sem Computer mark cannot be greater than 100";}?>">
+				    	   			 <img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+								<input type="text" class="form-control" placeholder="Computer"  name="Computer_1stsem"  value="<?php echo $retainComputer_1stsem;?>" style="border: <? if($Computer_1stsemErrFlag == "True") { echo "solid 3px red"; } ?>" >
+							</div>
+							<div class="col-md-6">
+								<label>Chemistry-I</label>
+								<? if($Chemistry_1stsemErrFlag == "True") { ?>
+				    	   			<a href="#" data-toggle="popover" title="Warning" data-content="<? if($Chemistry_1stsemEmptyFlag == "True"){ echo "Enter 1st sem Chemistry mark "; }elseif($Chemistry_1stsemCharInvalid == "True"){ echo "Enter 1st sem Chemistry as numeric only"; }elseif($Chemistry_1stsemLessThanZeroError == "True") { echo "1st sem Chemistry mark cannot be less than  0";}elseif($Chemistry_1stsemGreaterThanZeroError == "True") { echo "1st sem Chemistry mark cannot be greater than 100";}?>">
+				    	   			 <img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+								<input type="text" class="form-control" placeholder="Chemistry-I"  name="Chemistry_1stsem" value="<?php echo $retainChemistry_1stsem;?>" style="border: <? if($Chemistry_1stsemErrFlag == "True") { echo "solid 3px red"; } ?>"  >
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<label>Grade Point Assessment</label>
+								<? if($GPA_1stsemErrFlag == "True") { ?>
+				    	   			<a href="#" data-toggle="popover" title="Warning" data-content="<? if($GPA_1stsemEmptyFlag == "True"){ echo "Enter 1st sem GPA_1stsem"; }elseif($GPA_1stsemCharInvalid == "True"){ echo "Enter 1st sem GPA as numeric only"; }elseif($GPA_1stsemLessThanZeroError == "True") { echo "1st sem GPA cannot be less than  0";}elseif($GPA_1stsemGreaterThanZeroError == "True") { echo "1st sem GPA cannot be greater than 100";}?>">
+				    	   			 <img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+								<input type="text" class="form-control" placeholder="GPA"  name="GPA_1stsem" value="<?php echo $retainGPA_1stsem;?>" style="border: <? if($GPA_1stsemErrFlag == "True") { echo "solid 3px red"; } ?>"  >
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="container w3-indigo" style="padding:24px;border-radius:20px;">
+						<div class="row">
+							<div class="mx-auto">
+								<label>Semester - II</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<label>English- II</label>
+								<? if($English_2stsemErrFlag == "True") { ?>
+				    	   			<a href="#" data-toggle="popover" title="Warning" data-content="<? if($English_2stsemEmptyFlag == "True"){ echo "Enter 2nd semester English mark "; }elseif($English_2stsemCharInvalid == "True"){ echo "Enter  2nd semester English as numeric only"; }elseif($English_2stsemLessThanZeroError == "True") { echo "2nd semster English mark cannot be less than  0";}elseif($English_2stsemGreaterThanZeroError == "True") { echo "2nd semester English mark cannot be greater than 100";}?>">
+				    	   			 <img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+								<input type="text" class="form-control" placeholder="English- II"  name="English_2stsem" value="<?php echo $retainEnglish_2stsem;?>" style="border: <? if($GPA_1stsemErrFlag == "True") { echo "solid 3px red"; } ?>"  >
+							</div>
+							<div class="col-md-6">
+								<label>Physics - II</label>
+								<? if($RollNoCLGErrFlag == "True") { ?>
+				    	   			<a href="#" data-toggle="popover" title="Warning" data-content="<? if($EmptyFlag == "True"){ echo "Enter 1st sem  mark "; }elseif($CharInvalid == "True"){ echo "Enter  as numeric only"; }elseif($LessThanZeroError == "True") { echo "1st sem mark cannot be less than  0";}elseif($GreaterThanZeroError == "True") { echo "1st sem mark cannot be greater than 100";}?>"
+				    	   			 <img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+								<input type="text" class="form-control" placeholder="Physics - II"  name="maths10"   >
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<label>Maths-II</label>
+								<? if($RollNoCLGErrFlag == "True") { ?>
+				    	   			<a href="#" data-toggle="popover" title="Warning" data-content="<? if($EmptyFlag == "True"){ echo "Enter 1st sem  mark "; }elseif($CharInvalid == "True"){ echo "Enter  as numeric only"; }elseif($LessThanZeroError == "True") { echo "1st sem mark cannot be less than  0";}elseif($GreaterThanZeroError == "True") { echo "1st sem mark cannot be greater than 100";}?>"
+				    	   			 <img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+								<input type="text" class="form-control" placeholder="Maths-II"  name="maths10"   >
+							</div>
+							<div class="col-md-6">
+								<label>Digital Principle</label>
+								<? if($RollNoCLGErrFlag == "True") { ?>
+				    	   			<a href="#" data-toggle="popover" title="Warning" data-content="<? if($EmptyFlag == "True"){ echo "Enter 1st sem  mark "; }elseif($CharInvalid == "True"){ echo "Enter  as numeric only"; }elseif($LessThanZeroError == "True") { echo "1st sem mark cannot be less than  0";}elseif($GreaterThanZeroError == "True") { echo "1st sem mark cannot be greater than 100";}?>"
+				    	   			 <img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+								<input type="text" class="form-control" placeholder="ECE"  name="maths10"   >
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<label>Data Structure - I</label>
+								<? if($RollNoCLGErrFlag == "True") { ?>
+				    	   			<a href="#" data-toggle="popover" title="Warning" data-content="<? if($EmptyFlag == "True"){ echo "Enter 1st sem  mark "; }elseif($CharInvalid == "True"){ echo "Enter  as numeric only"; }elseif($LessThanZeroError == "True") { echo "1st sem mark cannot be less than  0";}elseif($GreaterThanZeroError == "True") { echo "1st sem mark cannot be greater than 100";}?>"
+				    	   			 <img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+								<input type="text" class="form-control" placeholder="DS - I"  name="maths10"   >
+							</div>
+							<div class="col-md-6">
+								<label>Chemistry - II</label>
+								<? if($RollNoCLGErrFlag == "True") { ?>
+				    	   			<a href="#" data-toggle="popover" title="Warning" data-content="<? if($EmptyFlag == "True"){ echo "Enter 1st sem  mark "; }elseif($CharInvalid == "True"){ echo "Enter  as numeric only"; }elseif($LessThanZeroError == "True") { echo "1st sem mark cannot be less than  0";}elseif($GreaterThanZeroError == "True") { echo "1st sem mark cannot be greater than 100";}?>"
+				    	   			 <img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+								<input type="text" class="form-control" placeholder="Chemistry - II"  name="maths10"   >
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<label>Grade Point Assessment</label>
+								<? if($RollNoCLGErrFlag == "True") { ?>
+				    	   			<a href="#" data-toggle="popover" title="Warning" data-content="<? if($EmptyFlag == "True"){ echo "Enter 1st sem  mark "; }elseif($CharInvalid == "True"){ echo "Enter  as numeric only"; }elseif($LessThanZeroError == "True") { echo "1st sem mark cannot be less than  0";}elseif($GreaterThanZeroError == "True") { echo "1st sem mark cannot be greater than 100";}?>"
+				    	   			 <img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+								<input type="text" class="form-control" placeholder="sub1"  name="maths10"   >
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			 <div class="row">
+			  	<div class="justify-content-center mx-auto ">
+		  		    	   <button type="submit" class="mt-4 mx-auto" name="input" style="border-radius:20px;font-size:24px;" value="Submit">Submit</button>
+				</div>
+			  </div>
+		</div>
+	</form>
+	<script>
+	$(document).ready(function(){
+	    $('[data-toggle="popover"]').popover();   
+	});
+	</script>
+	</body>
+</html>

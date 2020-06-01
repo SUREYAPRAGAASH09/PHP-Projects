@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	  <title>Form validation</title>
+	  <meta charset="utf-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	  <style>
+		  div
+		  {
+		    background-color:lightgray;
+		    }
+		body
+		{
+			  width: 500px;
+			  padding: 45px;
+			  margin-left:350px;
+			  
+		}
+		[type="text"]
+		{
+		
+			width:340px;
+			height:40px;
+			font-size:19px;
+			margin-left:20px;
+			font-size:20px;
+		}
+		[type="radio"]
+		{
+		   margin-left:40px;
+		}
+		
+		{
+			width:340px;
+			height:40px;
+			margin-left:20px; 
+			
+		}
+		[type="submit"]
+		{
+			width:100px;
+			height:50px;
+			border-radius:100px;
+		}
+		input[type=text]:focus 
+		{
+		  background-color: lightblue;
+		}
+		.popover{
+		  min-width:100px;
+		  width:100%;
+		  max-width:300px;
+		  background:red;
+		  font-size:18px;
+		  
+		}
+	</style>
+</head>
+
+	<div class="container-fluid">
+		<body   style=" background-attachment: fixed;  background-size:1500px 700px">
+			<form action="..\php\student.php" method="POST">
+ 			<center> <h3><label>Student Details</label></h3> </center></br>
+ 				<form class="form-horizontal">  
+					<div class="form-group">
+						<div class="row">	 
+						    	<div class="col-sm-6 col-xl-12 col-lg-12">
+								<label class="col-sm-3 col-xl-8 col-lg-8 " style=color:blue for="NAME">Enter StudentName: 
+									<? if($snameError !== "") { ?>
+									<a href="#" style=margin-left:50px  data-toggle="popover" data-trigger="hover" data-placement="right"  data-content="<? echo $snameError; ?>"><img src="../html/Exclamation3.jpg"  style="height:15px;width:15px;"></a>		
+									<script>
+											$(document).ready(function()
+											{
+											    $('[data-toggle="popover"]').popover();  
+											});
+									</script> 
+									 <? } ?>
+								</label>
+								 <input  class="form-control" type="text" name=stud_name  placeholder="Student Name"  value="<? echo $stud_name;?>"> 
+							</div>
+	
+	 
+	 
+						 <div class="row">	
+						 	<div class="col-sm-6 col-xl-12 col-lg-12">
+								      	<label class=" col-sm-3 col-xl-8 col-lg-8"style=color:blue for="rno">Enter RollNumber:</label>
+									      <? if($rnoError!=="") { ?>
+										<a href="#"style=margin-left:50px  data-toggle="popover"  data-trigger="hover"style=color:red data-placement="right"  data-content="<? echo $rnoError; ?>"><img src="../html/Exclamation3.jpg"  style="height:15px;width:15px;"></a>
+									      <?}?>
+									<input class="form-control"  type="text" name=stud_rno  placeholder="RollNumber "value="<?php echo $stud_rno;?>">
+							     
+						    	   </div>
+					    	   </div>
+    	   
+						<div class="row">	
+							<div class="col-md-6">
+								<label  style="color:blue" for="dob"> Enter DateOfBirth:</label></br>
+									<? if($monthError != "") {   ?>
+									<a href="#"style=margin-left:50px  data-toggle="popover"  data-trigger="hover"style="color:red;" data-placement="right"  data-content="<? echo $rnoError; ?>"><img src="../html/Exclamation3.jpg"  style="height:15px;width:15px;"></a>
+									<? } ?>
+								    	<select     style="margin-left:20px" name="Month" > 
+								    		 <option value="" selected >Year</option>
+								     		 <? for($month_cal=1;$month_cal<=12;$month_cal++){?>
+								     		 	<option value=<? echo $month_cal;?> <? if($month_cal=="$Month"){echo "selected"; } ?>> <? echo $month_cal;?> </option> 
+								     		 <?}?> 
+							     		</select>
+							</div>	 
+						 </div>
+   	   
+					   	<div class="row">	
+						    	<div class="col-sm-6 col-xl-12 col-lg-12">
+						    	      <label class=" col-sm-3 col-xl-8 col-lg-8"style=color:blue for="gender">Gender:
+							    	      <? if($genderError!=="") {?>
+							    	      	<a href="#"style=margin-left:50px  data-toggle="popover"  data-trigger="hover"style=color:red data-placement="right"  data-content="<? echo $genderError; ?>"><img src="../html/Exclamation3.jpg"  style="height:15px;width:15px;"></a>
+										 <script>
+											$(document).ready(function(){
+											    $('[data-toggle="popover"]').popover();   
+											});
+										</script><br>
+								     <? } ?>
+								</label>
+							      <br><input type="radio" name="sgender" value="male"<?php if($sgender=="male"){echo "checked";} ?>>Male 
+							      <input type="radio" name="sgender" value="female"<?php if($sgender=="female"){echo "checked";} ?>>Female 
+							      <input type="radio" name="sgender" value="other"<?php if($sgender=="other"){echo "checked";} ?>>Other<br>
+							       
+						    	  </div>
+					    	  </div>
+    	  
+    	  <div><br><center>
+     		  <style=color:black ><h3><mark>Marks:</mark></h3>
+   	 </div></center>
+   	 
+   	<div class="row">	
+    	<div class="col-sm-6 col-xl-12 col-lg-12">
+   	 	<label style=color:blue class=" col-sm-3 col-xl-8 col-lg-8"  >Enter Maths Mark: 
+	   	 	<?
+			if($math_Error!=="")
+			{?>
+	     		<a href="#"style=margin-left:50px  data-toggle="popover" style=margin-left:10px data-trigger="hover"style=color:red data-placement="right"  data-content="<? echo $math_Error; ?>"><img src="../html/Exclamation3.jpg"  style="height:15px;width:15px;"></a>
+				 <script>
+					$(document).ready(function(){
+					    $('[data-toggle="popover"]').popover();   
+					});
+				</script>
+			<?
+			 }
+			?>
+		</label>
+     		<input type="text"name="math_mark" class="form-control" placeholder="Maths Mark"value="<?php echo $math_mark;?>">
+	</div>
+	</div>
+	  	 
+     	<div class="row">	
+    	<div class="col-sm-6 col-xl-12 col-lg-12">	
+     		<label style=color:blue class=" col-sm-3 col-xl-8 col-lg-8" >Enter Chemistry Mark
+	     		<?
+			if($chem_Error!=="")
+			{?> 
+	     		<a href="#"style=margin-left:50px  data-toggle="popover" style=margin-right:10px data-trigger="hover"style=color:red data-placement="right"  data-content="<?php echo $chem_Error;?>"><img src="../html/Exclamation3.jpg"  style="height:15px;width:15px;"></a>
+				 <script>
+					$(document).ready(function(){
+					    $('[data-toggle="popover"]').popover();   
+					});
+				</script>
+				<?
+			 }
+			?>
+		</label>
+     		<input type="text"name="chem_mark" class="form-control" placeholder="Chemistry Mark"value="<?php echo $chem_mark;?>">
+     	    </div>
+     	    </div>
+     	    	 
+     	<div class="row">	
+    	<div class="col-sm-6 col-xl-12 col-lg-12">	
+     		<label style=color:blue class="col-sm-3 col-xl-8 col-lg-8">Enter Physics Mark:
+	     		<?
+			if($phy_Error!=="")
+			{?> 
+	     		<a href="#" style=margin-left:50px data-toggle="popover" style=margin-right:10px data-trigger="hover"style=color:red data-placement="right"  data-content="<?php echo $phy_Error;?>"><img src="../html/Exclamation3.jpg"  style="height:15px;width:15px;"></a>
+				 <script>
+					$(document).ready(function(){
+					    $('[data-toggle="popover"]').popover();   
+					});
+				</script>
+			<?
+			 }
+			?>
+     		</label>
+     		<input type="text"name="phy_mark" class="form-control" placeholder="Physics  Mark"value="<?php echo $phy_mark;?>">
+     	  </div>
+     	  </div>
+     	   
+     	<div class="row">	
+    	<div class="col-sm-6 col-xl-12 col-lg-12">	
+     		<label style=color:blue class=" col-sm-3 col-xl-10 col-lg-10">Enter Computer Science 
+	     		<?
+			if($com_Error!=="")
+			{?> 
+	     		<a href="#"style=margin-left:50px data-toggle="popover" style=margin-left:10px data-trigger="hover"style=color:red data-placement="right"  data-content="<?php echo $com_Error;?>"><img src="../html/Exclamation3.jpg"  style="height:15px;width:15px;"></a>
+				 <script>
+					$(document).ready(function(){
+					    $('[data-toggle="popover"]').popover();   
+					});
+				</script>
+			<?
+			 }
+			?>
+     		</label>
+     		<input type="text"name="com_mark" class="form-control" placeholder="Computer Science Mark"value="<?php echo $com_mark;?>">
+     	  </div>
+     	  </div>
+     	 <div class="row">	
+    	 <div class="col-sm-6 col-xl-12 col-lg-12">
+     		<label style=color:blue class=" col-sm-3 col-xl-8 col-lg-8">Enter Biology Mark
+	     		<?
+			if($bio_Error!=="")
+			{?>
+	     		<a href="#"style=margin-left:50px  data-toggle="popover" style=margin-left:10px data-trigger="hover"style=color:red data-placement="right"  data-content="<?php echo $bio_Error;?>"><img src="../html/Exclamation3.jpg"  style="height:15px;width:15px;"></a>
+				 <script>
+					$(document).ready(function(){
+					    $('[data-toggle="popover"]').popover();   
+					});
+				</script>
+			<?
+			 }
+			?>
+		</label> 
+     		<input type="text"name="bio_mark" class="form-control" placeholder="Biology Mark"value="<?php echo $bio_mark;?>"></center>
+    		
+    	</div>
+        </div>
+        
+    	<div class="row">	
+    	<div class="col-sm-6 col-xl-12 col-lg-12">
+    		<label style=color:blue  class=" col-sm-3 col-xl-8 col-lg-8">Select Semester
+	    		<?
+			if($sem_Error!=="")
+			{
+			?>
+	     		<a href="#"style=margin-left:50px  data-toggle="popover" style=margin-left:10px data-trigger="hover"style=color:red data-placement="right"  data-content="<?php echo $sem_Error;?>"><img src="../html/Exclamation3.jpg"  style="height:15px;width:15px;"></a>
+				 <script>
+					$(document).ready(function(){
+					    $('[data-toggle="popover"]').popover();   
+					});
+				</script>	
+			<?
+			 }
+			?>
+		</label>
+		<br>
+     		 <select name="choose_sem" style=margin-left:20px > 
+     		 		<option value="">--select--</option>
+     		 		<option value="first_sem"  <?php if($choose_sem=="first_sem"){echo "selected";} ?>>1</option>
+    				<option value="second_sem" <?php if($choose_sem=="second_sem"){echo "selected";} ?>>2</option>
+    				<option value="third_sem"  <?php if($choose_sem=="third_sem"){echo "selected";} ?>>3</option>
+    				<option value="fourth_sem" <?php if($choose_sem=="fourth_sem"){echo "selected";} ?>>4</option>
+    				<option value="fifth_sem"  <?php if($choose_sem=="fifth_sem"){echo "selected";} ?>>5</option>
+    				<option value="sixth_sem"  <?php if($choose_sem=="sixth_sem"){echo "selected";}?>>6</option>
+    		</select><br><br>
+    	</div>	
+    	</div>	
+    	<div><center><br>
+	  	<button  style=color:white class="btn btn-primary"  type="submit" name=display value="submit" >submit</button>
+	</div><br></center>
+</div>
+</div>
+</form> 
+</center>
+</body>
+</html>
+

@@ -1,0 +1,88 @@
+<html>
+	<head>
+		<title>Color-Game</title>
+		
+		<meta charset="utf-8"> 
+		<meta name = "viewport" content = "width=device-width, inital-scale = 1.0"> 
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+ 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+ 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+ 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+ 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+ 		  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+ 		  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+		  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+		<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-win8.css">
+	<style>
+		
+		 .text-white
+		 {
+		 	width : 90%;
+		 	margin : auto;
+		 	background-color : rgb(255,255,255);
+		 	 
+		 }	
+		 .container
+		{
+			height : 340px !important;
+		}
+		@media only screen and (max-width: 1920px) 
+		{
+		   .container 
+		   {
+		   	width : 40%;
+		  }
+		}
+		@media only screen and (max-width: 600px) 
+		{
+		 .container 
+		   {
+		   	width : 90%;
+		  }
+			
+		   .btn 
+		   {
+		   	width : 20% !important;
+		  }
+		}
+		
+		
+		
+	</style>
+	</head>
+	
+	<form action="colorGame.php" method="POST">
+	<body background="color.jpg" style=" background-repeat: no-repeat;background-size:3000px 1000px;">
+		<div class="container text-white mt-5" style="background-color: lightblue;">
+			<div class="text-body" >  
+			 	<h1 class=" bg-primary text-center">The Stain Bet</h1>
+			 </div>
+			 <div class="col-sm-6 col-md-12" align="right">
+			   	<h3 style="color:black">Score : <? echo $score; ?> </h3>
+			   </div>
+			   
+		   	<div class="justify-content-center  mx-auto">
+		   		<h2 class="text-center" style="color:black">Tap on <? echo $currentColorName; ?> Color</h2>
+		   	</div>
+			
+			<div class="row pb-5" style="margin-top:48px;">
+			   	<div class="col" align="center">
+			   		<input type="submit" class="shadow btn  button2" name="input" value = " <? echo ltrim($Colors[0]); ?>" style="width : 8%;background-color: <? echo $Colors[0]; ?>;font-size:0;display: inline-block; height: 50px; ">
+			   		<input type="submit" class="shadow btn button3" name="input" value = " <? echo ltrim($Colors[1]); ?>" style="width : 8%;background-color: <? echo $Colors[1]; ?>; font-size:0;display: inline-block; height: 50px;">
+			   		<input type="submit" class="shadow btn  button4" name="input" value = " <? echo ltrim($Colors[2]); ?>" style="width : 8%;background-color: <? echo $Colors[2]; ?>; font-size:0;display: inline-block; height: 50px;">
+			   	</div>
+			   </div>
+			   <div class="progress">
+			    	<div class="progress-bar" style="width:<?echo $score*10; ?>%"></div>
+			  </div>
+		</div>
+		
+	</body>	
+		 <input type="hidden" id="count" name="count" value="<?php  echo  $count; ?>" placeholder="count">
+		<input type="hidden" id="intialColorFlag" name="intialColorFlag" value="<?php echo $intialColorFlag; ?>" placeholder="intialColorFlag"> 
+		<input type="hidden" id="currentColorName" name="currentColorName" value="<?php echo  $currentColorName; ?>" placeholder="currentColorName"> 
+		<input type="hidden" id="score" name="score" value="<?php echo  $score; ?>" placeholder="score"> 
+	</form>
+	
+</html>

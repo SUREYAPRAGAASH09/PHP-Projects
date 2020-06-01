@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Get Marks</title>
+		 <meta charset="utf-8">
+		  <meta name="viewport" content="width=device-width, initial-scale=1">
+		  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+		  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+		  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+		  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	</head>
+	<body>
+		<label id="d"></label><br>
+		
+		<div class="container w3-indigo" style="width:50%;margin-top:100px;padding:24px;">
+			 
+			 
+				 
+			 
+			<div class="mt-4 row">
+				<div class="col-md-6">
+					<label id="subject_1">  </label>
+					<? if($RollNo10ErrFlag == "True") { ?>
+					<a href="#" data-toggle="popover" title="Warning" data-content="<? if($RollNo10EmptyFlag == "True"){ echo "Enter Roll No"; }elseif($RollNo10CharInvalid == "True"){ echo "Enter Roll No as Numeric values only"; }elseif($RollNo10LessThanZeroError == "True"){ echo "Enter Roll No Number from 1 to 100"; } ?>" style="color:red;"><img src="../php/help.jpg" alt="help" style="height:13px;width:13px;"><? } ?></a>
+					<input type="text" class="form-control" placeholder="Computer" name="computer" style="border: <? if($RollNo10ErrFlag == "True") { echo "solid 3px red"; } ?> ">
+				</div>
+				<div class="col-md-6">
+					<label id="subject_2">  </label>
+					<input type="text" class="form-control" placeholder="Computer" name="computer" >
+				</div>
+			</div>
+			<div class="mt-4 row">
+				<div class="col-md-6">
+					<label id="subject_3">  </label>
+					<input type="text" class="form-control" placeholder="Computer" name="computer" >
+				</div>
+				<div class="col-md-6">
+					<label id="subject_4">  </label>
+					<input type="text" class="form-control" placeholder="Computer" name="computer" >
+				</div>
+			</div>
+			<div class="mt-4 row">
+				<div class="col-md-6">
+					<label id="subject_5">  </label>
+					<input type="text" class="form-control" placeholder="Computer" name="computer" >
+				</div>
+				<div class="col-md-6">
+					<label id="subject_6">  </label>
+					<input type="text" class="form-control" placeholder="Computer" name="computer" >
+				</div>
+			</div>
+			<label id="dummys"></label>
+		</div>
+		 <script>
+		function myFunction() {
+		  var Department = document.getElementById("Department").value;
+		  var semester = document.getElementById("semester").value;
+		  document.getElementById("d").innerHTML =  semester;
+		  document.getElementById("dummys").innerHTML =  Department;
+		 
+		}
+		</script>
+	</body>
+</html>

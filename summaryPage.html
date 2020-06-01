@@ -1,0 +1,225 @@
+<!doctype html>
+<html>
+	<head>
+		<? if($storeType != "xml" ) {
+			echo "<br>$storageType";	
+			include("../php/sqlConnectionFile.php");
+			$sql = "select DISTINCT  FirstName,CONVERT(varchar(24),DOB) as DOB,Gender,RollNoCLG,Department,personalDetails_ID FROM personalDetails INNER JOIN collegeRecords ON personalDetails_ID = personalDetails_collegeRecords_FK ORDER BY FirstName ASC";
+			$stmt = sqlsrv_query( $conn, $sql );
+			if( $stmt == false) {
+			   die( print_r( sqlsrv_errors(), true) );
+			}
+			else
+			{
+				echo "<br>html sql  founded";
+			}
+		}
+		 ?>
+		<title>Student Summary</title>
+		 <meta charset="utf-8">
+		  <meta name="viewport" content="width=device-width, initial-scale=1">
+		  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+		  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+		  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+		  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	
+	<style>
+		body {
+				  font-family: Arial;
+				  color : black;
+				  background-color: #ddffdd!important;
+				  font-size:17px;
+			}
+		button {
+				  background-color: #4CAF50;
+				  color: white;
+				  border: none;
+				  cursor: pointer;
+				    padding: 4px 12px;
+			}
+		   .mystyle
+			{  
+				 font-size : 20px; 	 
+				 border-radius:24px;
+				  border-style: none;
+			}
+		td
+		{
+			color:white;
+		}
+		.img-thumbnail-clg
+		{
+			  position: absolute;
+			    top:80px;
+			    left:47%;
+			    border-radius:50px; 
+			    border:none;
+			
+		}
+		.inner-image
+		{
+			height:68px;
+			width:68px;
+			border-radius:50px; 
+		}
+		.modal
+		{
+			color:black;
+		}
+		
+			
+	</style>
+</head>
+<body>
+	 <? 
+	 	  $CON = 1;
+		  include("../php/navigationMenu.php");  
+		 ?>
+	<form action="../php/summaryPage.php" method="POST">
+	 
+	<div class="container w3-indigo"  style="margin-top:64px; border-radius:34px;">
+		<div class="row">
+	 	 	<div class="justify-content-center mx-auto">
+	 	 		<img class="shadow-lg  img-thumbnail-clg  inner-image"  src="../php/summaryIcon.png" alt="personalDetailsIcon" >
+	 	 	</div>
+	 	 </div>
+		<div class="mt-2 row">
+			<div class="justify-content-center mx-auto">
+				<H3>Student Summary</h3>
+				 
+			</div>
+		</div>
+		<div class="container" style="margin-left:950px;margin-bottom:24px;">
+			<div class="row" >
+				<div class="col-md-2">
+					<button type="submit" class=" " name="input" style="border-radius:20px;font-size:24px;" value="add_new" >ADD NEW </button>
+				</div>
+			</div>
+		</div>
+		
+		<div class=" table-responsive-sm">
+			    <table class="table  table-hover">
+			      <thead class="w3-indigo">
+				        <tr>
+					          <th>Name</th>
+					          <th>Date of Birth</th>
+					          <th>Gender</th>
+					          <th>Roll Number</th>
+					          <th>Department</th>
+					          <th>Update</th>
+					          <th>Delete</th>
+				       </tr>
+			</thead>
+		<? if($storeType == "xml") {?>
+			<tbody>
+			<? $xml=simplexml_load_file("../xml/note.xml") or die("Error: Cannot create object");?>
+			 	       <tr>
+				       	<? foreach($xml->children() as $student)  //studentDetails
+					{		 
+					  ?>
+					          <td><? echo $student->personalDetails->FirstName; ?></td>
+					          <?foreach($student->personalDetails->children()as $DOB)
+					 	{
+					 		  $date = $DOB->Date ;
+						 	  $month =  $DOB->Month; 
+						 	  $year = $DOB->Year;
+						 	  if($date  != "")
+						 	  {?>
+						 		<td><?echo $date . "-". $month ."-". $year; ?></td>
+						 	<?  }
+						}?>
+					         
+					         <td><? echo $student->personalDetails->Gender; ?></td>
+					          <td><? echo $student->CollegeRecords->RollNo; ?></td>
+					          <td><? echo $student->CollegeRecords->Department; ?></td>
+					          
+					           <td><a     class="    btn-primary btn " href="summaryPage.php?xml_id=<? echo    $student['id'];   ?>&operation=update&storeType=xml">update</a></td>
+					          <td><a     class="    btn-danger btn " href="summaryPage.php?xml_id=<? echo    $student['id']; ?>&operation=delete&storeType=xml">Delete</a> </td>
+					          <!-- <input type="text" id="PrimaryKey_ID" name="PrimaryKey_ID" value="<?php echo  $row[5]; ?>" placeholder="PrimaryKey_ID"> -->
+					       
+				        </tr>
+				        	<? }  ?> 
+			</tbody>
+			  
+		<? } else { ?>
+			<tbody>
+				        <tr>
+				        <? while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) { ?>
+					          <td><? echo $row['FirstName']; ?></td>
+					          <td><? echo $row['DOB']; ?></td>
+					         <td><? echo  $row['Gender']; ?></td>
+					          <td><? echo  $row['RollNoCLG']; ?></td>
+					          <td><? echo  $row['Department']; ?></td>
+					          
+					           <td><a     class="    btn-primary btn " href="summaryPage.php?Primary_Key_id=<? echo  $row['personalDetails_ID']; ?>&operation=update">update</a></td>
+					          <td><a     class="    btn-danger btn " href="summaryPage.php?Primary_Key_id=<? echo  $row['personalDetails_ID']; ?>&operation=delete">Delete</a> </td>
+					          <!-- <input type="text" id="PrimaryKey_ID" name="PrimaryKey_ID" value="<?php echo  $row[5]; ?>" placeholder="PrimaryKey_ID"> -->
+					          
+				        </tr>
+			</tbody>
+			<? }  ?>
+		<? } ?>
+	</table>
+	  </div>
+	</div>
+</div>
+ <? if($modelOpenFlag  == "True") { ?>
+				  
+			 <script type='text/javascript'>
+			$(document).ready(function(){
+			$('#myModal').modal('show');
+			});
+			</script>
+		<? } ?>
+  <input type="hidden" id="storeType" name="storeType" value="<?php echo  $storeType; ?>" placeholder="storeType"> 
+		<div class="modal" id="myModal">
+    			<div class="modal-dialog">
+     				 <div class="modal-content">
+      
+					        <!-- Modal Header -->
+					        <div class="modal-header">
+					         	 <h4 class="modal-title">Delete</h4>
+					          	<button type="button" class="close" data-dismiss="modal">&times;</button>
+					        </div>
+        
+					        <!-- Modal body -->
+					        <div class="modal-body">
+						        <? if($modelDataDeleteedFlag == "True") { ?>
+						        	<b>Data Erased<b>
+						        <? } else { ?>
+						        	<b><span>Are You sure  
+						          	Do You Want to delete?</span></b>
+						          <? } ?>
+					        </div>
+        
+      						  <!-- Modal footer -->
+      					<?	
+					if($storeType == "xml") 
+					{?>
+					  <div class="modal-footer">
+						         <? if($modelDataDeleteedFlag == "True") { ?>
+						         	<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+						         <? } else { ?>
+						            <a     class="  btn-danger btn "    href="summaryPage.php?operation=delete&xml_id=<? echo $xml_id; ?>&storeType=xml&Flag=True">Delete</a> 
+						        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+						         <? } ?>
+					        </div>
+					<? } else { 
+					?>
+					        <div class="modal-footer">
+						         <? if($modelDataDeleteedFlag == "True") { ?>
+						         	<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+						         <? } else { ?>
+						            <a     class="  btn-danger btn "    href="summaryPage.php?semNum=<? echo  $semNum; ?>&operation=delete&RollNoCLG=<? echo $RollNoCLG; ?>&Department=<?echo $Depart;?>&Flag=True&primaryKeyValue=<? echo $primaryKeyValue; ?>">Delete</a> 
+						        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+						         <? } ?>
+					        </div>
+					       <? } ?>
+        
+      				</div>
+    			</div>
+  		</div>	
+</form>	
+</body>
+</html>
