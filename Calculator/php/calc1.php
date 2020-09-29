@@ -1,5 +1,4 @@
 <?
- 
 if($symbols != "" or $operation != "" or $input != "" or $inputdot != "") {
 	$masterFlag = True;
 	 $CON = 1;
@@ -49,7 +48,6 @@ if($_POST["symbols"] == "+" or $_POST["symbols"] == "-" or $_POST["symbols"] == 
 	}
  }
  elseif($_POST["input"] == "+/-") {
-	 
 		if($_POST["txtbx2"] > 0) {
 			if($_POST["operator_count"] == 0) {
 				$txtbx2 = "-" . $txtbx2;
@@ -59,8 +57,7 @@ if($_POST["symbols"] == "+" or $_POST["symbols"] == "-" or $_POST["symbols"] == 
 				$txtbx2 = "-" . $txtbx2;
 				$second_value = $txtbx2;
 			}
-		}
-		else {
+		} else {
 			$txtbx2 = abs($txtbx2);
 	 	}
 }
@@ -96,7 +93,6 @@ elseif($_POST["operator_count"] >= 1) {
 	}
 }
 if($_POST["operation"] == "DEL") {
-	 
 	$temp = intval($_POST["txtbx2"]/10); 
 	if($first_number == 0) {
 		$txtbx2 = $temp;
