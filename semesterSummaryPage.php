@@ -1,40 +1,26 @@
 <?
-//echo $RollNoCLG;
-//echo $Department;
-//echo $xml_id;
 if($input == "Yes")
 {
 	$editFlag = True;
-	 $RollNo = $RollNoCLG;
-	 $Depar = $Department;  
+	$RollNo = $RollNoCLG;
+	$Depar = $Department;  
 	$semNum = $semNum;
 	include("../php/semesterMarkDetails.php");
 }
 elseif($input == "No")
 {
-	
 	include("../php/summaryPage.php");
 }
 elseif($input == "updates")
 {
-	//echo $semNum;
-	
 	$primaryKeyValue;
 	$editFlag = True;
-	 $RollNo = $RollNoCLG;
-	 $Depar = $Department;  
+	$RollNo = $RollNoCLG;
+	$Depar = $Department;  
 	include("../php/semesterMarkDetails.php");
 }
 elseif($input == "Delete")
 {
-//	echo $Department;
-//	echo $RollNoCLG;
-//	echo $semNum;
-	//echo $Depart = $Department;
-	//echo $RollNo = $RollNoCLG;
-	//echo $semesterNo = $semNum;
-	
-	
 	$modelOpenFlag  = True;
 	//echo $storeType;
 	if($displayFlag == "True") 
@@ -73,12 +59,7 @@ elseif($input == "Delete")
 		
 		else
 		{
-			//echo "inside display flag";
 			include("../php/sqlConnectionFile.php");
-			//echo "rollNo:::$RollNoCLG";
-			//echo "Department:::$Department";
-			//echo "semNum:::$semNum";
-			 	
 			$sql="delete from College_Details where Department = '$Department' and student_Roll_No = '$RollNoCLG' and semester = '$semNum' ";
 			 
 			$stmt = sqlsrv_query( $conn, $sql );
