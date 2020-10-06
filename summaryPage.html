@@ -66,18 +66,13 @@
 		.modal
 		{
 			color:black;
-		}
-		
-			
+		}	
 	</style>
 </head>
 <body>
-	 <? 
-	 	  $CON = 1;
-		  include("../php/navigationMenu.php");  
-		 ?>
+	 <?  $CON = 1;
+	     include("../php/navigationMenu.php");  ?>
 	<form action="../php/summaryPage.php" method="POST">
-	 
 	<div class="container w3-indigo"  style="margin-top:64px; border-radius:34px;">
 		<div class="row">
 	 	 	<div class="justify-content-center mx-auto">
@@ -97,7 +92,6 @@
 				</div>
 			</div>
 		</div>
-		
 		<div class=" table-responsive-sm">
 			    <table class="table  table-hover">
 			      <thead class="w3-indigo">
@@ -129,15 +123,12 @@
 						 		<td><?echo $date . "-". $month ."-". $year; ?></td>
 						 	<?  }
 						}?>
-					         
-					         <td><? echo $student->personalDetails->Gender; ?></td>
+					          <td><? echo $student->personalDetails->Gender; ?></td>
 					          <td><? echo $student->CollegeRecords->RollNo; ?></td>
 					          <td><? echo $student->CollegeRecords->Department; ?></td>
-					          
-					           <td><a     class="    btn-primary btn " href="summaryPage.php?xml_id=<? echo    $student['id'];   ?>&operation=update&storeType=xml">update</a></td>
+					          <td><a     class="    btn-primary btn " href="summaryPage.php?xml_id=<? echo    $student['id'];   ?>&operation=update&storeType=xml">update</a></td>
 					          <td><a     class="    btn-danger btn " href="summaryPage.php?xml_id=<? echo    $student['id']; ?>&operation=delete&storeType=xml">Delete</a> </td>
 					          <!-- <input type="text" id="PrimaryKey_ID" name="PrimaryKey_ID" value="<?php echo  $row[5]; ?>" placeholder="PrimaryKey_ID"> -->
-					       
 				        </tr>
 				        	<? }  ?> 
 			</tbody>
@@ -151,11 +142,9 @@
 					         <td><? echo  $row['Gender']; ?></td>
 					          <td><? echo  $row['RollNoCLG']; ?></td>
 					          <td><? echo  $row['Department']; ?></td>
-					          
 					           <td><a     class="    btn-primary btn " href="summaryPage.php?Primary_Key_id=<? echo  $row['personalDetails_ID']; ?>&operation=update">update</a></td>
 					          <td><a     class="    btn-danger btn " href="summaryPage.php?Primary_Key_id=<? echo  $row['personalDetails_ID']; ?>&operation=delete">Delete</a> </td>
-					          <!-- <input type="text" id="PrimaryKey_ID" name="PrimaryKey_ID" value="<?php echo  $row[5]; ?>" placeholder="PrimaryKey_ID"> -->
-					          
+					          <!-- <input type="text" id="PrimaryKey_ID" name="PrimaryKey_ID" value="<?php echo  $row[5]; ?>" placeholder="PrimaryKey_ID"> -->  
 				        </tr>
 			</tbody>
 			<? }  ?>
@@ -176,13 +165,11 @@
 		<div class="modal" id="myModal">
     			<div class="modal-dialog">
      				 <div class="modal-content">
-      
 					        <!-- Modal Header -->
 					        <div class="modal-header">
 					         	 <h4 class="modal-title">Delete</h4>
 					          	<button type="button" class="close" data-dismiss="modal">&times;</button>
 					        </div>
-        
 					        <!-- Modal body -->
 					        <div class="modal-body">
 						        <? if($modelDataDeleteedFlag == "True") { ?>
@@ -192,7 +179,6 @@
 						          	Do You Want to delete?</span></b>
 						          <? } ?>
 					        </div>
-        
       						  <!-- Modal footer -->
       					<?	
 					if($storeType == "xml") 
@@ -216,7 +202,6 @@
 						         <? } ?>
 					        </div>
 					       <? } ?>
-        
       				</div>
     			</div>
   		</div>	
