@@ -13,20 +13,10 @@ $retainChemistry=trim($chemistry);
 $retainTotalMarks12 = trim($totalMarks12);
 $retainRollNoCLG = trim($RollNoCLG);
 $retainMajor = trim($major); 
-//echo  $primaryKeyValue; 
-// echo $EditprimaryKey;
-//echo "primaryKey:::$primaryKeyValue";
-//echo "xml_id:::$xml_id";
-//echo  $xml_id;
-//echo "school Details entered";
-		
 
 if($input == "Submitss")
 {
-	//echo $primaryKeyValue;
-	//echo "xml_id:::$xml_id";
 	 include("../php/functions.php"); 
-	// echo $ErrorFlag = "False";
 	if (empty($RollNo10)) {
 		$RollNo10ErrFlag = $RollNo10EmptyFlag = $ErrorFlag = "True";
 	}
@@ -183,7 +173,7 @@ if($input == "Submitss")
 		{
 			$xml=simplexml_load_file("../xml/note.xml") or die("Error: Cannot create object");
 			foreach($xml->children() as $studentDetails) {
-				//echo $studentDetails->SchoolDetails->SchoolDetails_ID;
+				
 				  
 				    if($studentDetails->SchoolDetails->SchoolDetails_ID == $xml_id)
 				    {
@@ -192,7 +182,7 @@ if($input == "Submitss")
 				    }
 				    
 				  } 
-			//echo "recordExsist:::$recordExsist";
+			
 			if($recordExsist == "True")
 			{
 				//echo "inside true part";	
@@ -256,7 +246,7 @@ if($input == "Submitss")
 			}
 			
 			while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
-			     // echo "$row[0]<br />";
+			     
 			      if($row['personalDetails_SchoolDetails_FK'] == $primaryKeyValue)
 			      {
 			      	$updateFlag = "True";
@@ -340,12 +330,11 @@ if($input == "Submitss")
 	}
 	else
 	{
-	include("../html/SchoolDetails.html");
+	   include("../html/SchoolDetails.html");
 	}
 }
 else
-{
-	//echo "inside else ";
-include("../html/SchoolDetails.html");
+{ 
+    include("../html/SchoolDetails.html");
 }
 ?>
